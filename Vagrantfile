@@ -5,10 +5,10 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.provision "shell", inline: <<-SHELL
      dnf install -y make tmux 
-     dnf install llvm llvm-libs llvm-doc clang clang-libs
-     dnf install bcc bcc-tools bcc-doc --enablerepo=updates-testing
-     dnf install kernel-devel
-     dnf install python3-pyroute2
+     dnf install -y llvm llvm-libs llvm-doc clang clang-libs
+     dnf install -y bcc bcc-tools bcc-doc --enablerepo=updates-testing
+     dnf install -y kernel-devel
+     dnf install -y python3-pyroute2
      reboot
   SHELL
 end
