@@ -1,0 +1,16 @@
+textarea {
+  width: 97%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background: #FFD;
+  font-size: 11pt;
+}
+
+a {
+  color: red;
+}
+
+#download {
+  padding: 12px;
+}
