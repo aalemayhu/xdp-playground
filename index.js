@@ -68,7 +68,9 @@ app.get('/app_version', function(req, res){
 });
 
 app.get('/version', function(req, res){
-  res.send("TODO: version of clang, kernel, etc");
+  var kernel = execSync('uname -r');
+  var clang = execSync("clang --version");
+  res.send(kernel+"<br>"+clang);
 });
 
 app.get('*', function(req, res) {
