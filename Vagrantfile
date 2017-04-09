@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
      dnf install -y llvm llvm-libs llvm-doc clang clang-libs
      dnf install -y bcc bcc-tools bcc-doc --enablerepo=updates-testing
      dnf install -y kernel-devel
-     dnf install -y python3-pyroute2
+     dnf install -y python3-pyroute2 make
      reboot
   SHELL
 end
