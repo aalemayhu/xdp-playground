@@ -1,9 +1,9 @@
 <!doctype html>
-<html ng-app="2nft">
+<html ng-app="xdp-playground">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>2nft</title>
+    <title>xdp-playground</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js">
     </script>
     <script src="app.js"></script>
@@ -11,7 +11,7 @@
   </head>
   <body ng-controller="MainController">
     <div>
-      <h1>2nft<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
+      <h1>xdp-playground<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
         <strong ng-if="iptables_version != 'xyz'">using iptables-translate {{ iptables_version }}</strong>
       </p>
         <!-- old rules -->
@@ -32,10 +32,7 @@
       <div>
         <h3>Useful Links</h3>
       <ul>
-        <li><a href="https://wiki.nftables.org/wiki-nftables/index.php/List_of_available_translations_via_iptables-translate_tool">List of available translations via iptables-translate tool</a></li>
-          <li><a href="http://patchwork.ozlabs.org/project/netfilter-devel/list/">Patchwork Netfilter Development</a></li>
-          <li><a href="/help">iptables-translate --help</a></li>
-          <li><a href="https://github.com/alemayhu/2nft">alemayhu/2nft</a></li>
+        <li><a href="http://prototype-kernel.readthedocs.io/en/latest/index.html">Prototype Kernel<a></li>
       </ul>
       </div>
     </div>
