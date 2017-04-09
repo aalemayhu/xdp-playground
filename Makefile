@@ -2,7 +2,7 @@ project ?=xdp-playground
 port ?= 8080
 
 serve:
-	./node_modules/.bin/nodemon index.js
+	npm start
 setup:
 	npm install
 
