@@ -7,10 +7,15 @@ textarea {
   font-size: 11pt;
 }
 
-a {
-  color: red;
-}
-
 #download {
   padding: 12px;
+}
+
+body {
+  background: #1b2f43;
+  color: #fff;
+}
+
+a {
+  color: red;
 }
