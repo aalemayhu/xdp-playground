@@ -18,36 +18,28 @@ var local_filename = function(hash) {
   return dir+"/"+hash+".c";
 }
 
-var compile = function(data, debug) {
-  return "TODO";
+var compile = function(id, debug) {
+  var c = execSync("clang -O2 -Wall -target bpf -c "+ local_filename(id) +" -o "+ id +".o");
+  return c;
 };
 
+// TODO: review the caching.
 app.post('/compile', function (req, res) {
   var data = req.body.input_code;
   var hash = crypto.createHash('md5').update(data).digest("hex");
   var path = local_filename(hash);
 
-  if (fs.existsSync(path)) {
-    fs.readFile(path, 'utf8', function (err, data) {
-      if (err) { // Fall back to no cache
-	a_log(err);
-	res.send(
-	    {id: hash,
-	      rules: compile(data, req.body.is_debug)});
-	return ;
-      }
-      res.send({id: hash, rules: data});
-      return ;
-    });
-  } else {
-    var compilation_results = compile(data, req.body.is_debug)
-      fs.writeFile(path, compilation_results, function(err) {
+  // TODO: review failure states
+  if (!fs.existsSync(path)) {
+      fs.writeFile(path, data, function(err) {
 	if (err) {
 	  a_log(err);
 	}
       });
-    res.send({id: hash, rules: compilation_results});
   }
+
+  var compilation_results = compile(hash, req.body.is_debug);
+  res.send({id: hash, results: compilation_results});
 });
 
 app.get('/download/:hash', function (req, res) {
