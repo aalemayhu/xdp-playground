@@ -3,7 +3,7 @@
 echo "{"
 echo "  \"name\": \"2nft\","
 echo "  \"version\": \"`git describe --tags`\","
-echo "  \"description\": \"web application to use iptables-translate\","
+echo "  \"description\": \"web application to experiment with XDP\","
 echo "  \"main\": \"index.js\","
 echo "  \"dependencies\": {"
 echo "    \"body-parser\": \"^1.17.1\","

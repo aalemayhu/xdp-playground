@@ -1,7 +1,7 @@
 {
   "name": "xdp-playground",
   "version": "0.0.1",
-  "description": "web application to use iptables-translate",
+  "description": "web application to experiment with XDP",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.17.1",

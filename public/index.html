@@ -12,20 +12,20 @@
   <body ng-controller="MainController">
     <div>
       <h1>xdp-playground<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
-        <strong ng-if="iptables_version != 'xyz'">using iptables-translate {{ iptables_version }}</strong>
+        <strong ng-if="versions != 'xyz'">using {{ versions }}</strong>
       </p>
         <!-- old rules -->
       <div>
 	<textarea 
             autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"
-	ng-change="old_rules_changed(this)"
- rows="{{ number_of_rows(old_rules) }}" cols="200" type="text" ng-model="old_rules"
-				    placeholder="Enter you legacy rules here">
+	ng-change="input_code_changed(this)"
+ rows="{{ number_of_rows(input_code) }}" cols="200" type="text" ng-model="input_code"
+				    placeholder="Insert / write your XDP program here">
 	</textarea>
       </div>
-      <div ng-if="new_rules.length > 0">
+      <div ng-if="compilation_results.length > 0">
 	<textarea readonly
-           rows="{{ number_of_rows(new_rules) }}" cols="200" type="text" ng-model="new_rules">
+           rows="{{ number_of_rows(compilation_results) }}" cols="200" type="text" ng-model="compilation_results">
 	</textarea>
 	<a id="download" href="/download/{{rule_id}}">Download</a>
       </div>

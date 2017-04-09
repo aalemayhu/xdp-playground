@@ -1,33 +1,33 @@
 let app = angular.module('xdp-playground', []);
 
 let controller = app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
-  $scope.old_rules_changed = function(obj, $event) {
-    let old_rules = obj.old_rules;
+  $scope.input_code_changed = function(obj, $event) {
+    let input_code = obj.input_code;
 
     var req = {
       method: 'POST',
-      url: '/translate',
+      url: '/compile',
       headers: {
 	'Content-Type': 'application/json'
       },
       data: {
-        old_rules: old_rules,
+        input_code: input_code,
         is_debug: false
       }
     }
     $http(req).then(function(res){
-      $scope.new_rules = res.data.rules;
+      $scope.compilation_results = res.data.rules;
       $scope.rule_id = res.data.id;
     }, function(){
     });
   };
 
-  $scope.iptables_version = "xyz";
+  $scope.versions = "xyz";
   $http({
     method: 'GET',
     url: '/version'
   }).then(function successCallback(response) {
-    $scope.iptables_version = response.data;
+    $scope.versions = response.data;
   }, function errorCallback(response) {
   });
 

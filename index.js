@@ -15,59 +15,15 @@ var a_log = function(output) {
 
 var local_filename = function(hash) {
   var dir = app.get('STORAGE_DIR') || "/tmp";
-  return dir+"/"+hash+".txt";
+  return dir+"/"+hash+".c";
 }
 
-var convert = function(data, debug) {
-  var ignore_prefixes = [ "iptables", "ip6tables" ];
-  var rules = data.replace(/\\\n/g, " ").split("\n");
-  var new_rules = '';
-
-  for (var i = 0; i < rules.length; i++) {
-    var rule = rules[i];
-
-    for (var j in ignore_prefixes) {
-      var prefix = ignore_prefixes[j];
-
-      rule = rule.replace("/sbin/"+prefix, "");
-      rule = rule.replace(prefix+"-translate", "");
-      rule = rule.replace("# "+prefix, "");
-      rule = rule.replace(prefix, "");
-    }
-
-    /* Keep comments
-     */
-    if (rule.startsWith("#")) {
-      new_rules += rule+"\n";
-      continue;
-    }
-
-    /* Not translating empty lines, but preserve them in case user wants to do
-     * some kind of grouping.
-     */
-    if (!rule || rule.trim().length == 0) {
-      new_rules += "\n";
-      continue;
-    }
-
-    rule = rule.match(/[A-Za-z-_0-9:,."!\s+/]/g).join("");
-
-    var translate_cmd = "exec iptables-translate "+rule;
-    a_log(translate_cmd);
-    try {
-      new_rules += execSync(translate_cmd);
-    } catch (e) {
-      var err_msg = e.message.replace("Command failed: exec ", "");
-      err_msg = err_msg.replace("Try `iptables-translate -h' or 'iptables-translate --help' for more information.", "");
-      new_rules += "# "+err_msg.split('\n').join(" ")+"\n";
-    }
-  }
-
-  return new_rules;
+var compile = function(data, debug) {
+  return "TODO";
 };
 
-app.post('/translate', function (req, res) {
-  var data = req.body.old_rules;
+app.post('/compile', function (req, res) {
+  var data = req.body.input_code;
   var hash = crypto.createHash('md5').update(data).digest("hex");
   var path = local_filename(hash);
 
@@ -77,20 +33,20 @@ app.post('/translate', function (req, res) {
 	a_log(err);
 	res.send(
 	    {id: hash,
-	      rules: convert(data, req.body.is_debug)});
+	      rules: compile(data, req.body.is_debug)});
 	return ;
       }
       res.send({id: hash, rules: data});
       return ;
     });
   } else {
-    var new_rules = convert(data, req.body.is_debug)
-      fs.writeFile(path, new_rules, function(err) {
+    var compilation_results = compile(data, req.body.is_debug)
+      fs.writeFile(path, compilation_results, function(err) {
 	if (err) {
 	  a_log(err);
 	}
       });
-    res.send({id: hash, rules: new_rules});
+    res.send({id: hash, rules: compilation_results});
   }
 });
 
@@ -112,18 +68,7 @@ app.get('/app_version', function(req, res){
 });
 
 app.get('/version', function(req, res){
-  var iptables_version = execSync('git -C netfilter.org/iptables describe');
-  res.send(iptables_version);
-});
-
-app.get('/help', function(req, res){
-  var iptables_help = execSync('iptables-translate --help');
-  res.send("<pre>"+iptables_help+"</pre>");
-});
-
-app.get('/werbinich', function(req, res){
-  var whoami = execSync('whoami');
-  res.send("<pre>"+whoami+"</pre>");
+  res.send("TODO: version of clang, kernel, etc");
 });
 
 app.get('*', function(req, res) {
