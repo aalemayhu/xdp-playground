@@ -19,7 +19,7 @@ var local_filename = function(hash) {
 }
 
 var compile_bpf = function(id, debug) {
-  var clang_cmd = "clang --verbose -O2 -Wall -target bpf -c "+ local_filename(id) +" -o "+ id +".o";
+  var clang_cmd = "clang -O2 -Wall -target bpf -c "+ local_filename(id) +" -o "+ id +".o";
   try {
     return execSync(clang_cmd);
   } catch (e) {
