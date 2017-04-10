@@ -40,18 +40,4 @@ let controller = app.controller('MainController', ['$scope', '$http', function (
     $scope.app_version = response.data;
   }, function errorCallback(response) {
   });
-
-  $scope.number_of_rows = function(lines) {
-    var min = 10;
-
-    if (!lines) {
-      return min;
-    }
-    var count = lines.split("\n").length;
-
-    if (count < min)
-      count = min;
-
-    return Math.min(count, 35);
-  };
 }]);
