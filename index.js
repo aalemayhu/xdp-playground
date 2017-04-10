@@ -20,8 +20,10 @@ var local_filename = function(hash) {
 
 var compile_bpf = function(id, debug) {
   var clang_cmd = "clang -O2 -Wall -target bpf -c "+ local_filename(id) +" -o "+ id +".o";
+  // TODO: use the test framework recently submitted upstream.
+  var ip_cmd = "ip link set dev etho xdp obj "+ id +".o sec xdp ";
   try {
-    return execSync(clang_cmd);
+    return execSync(clang_cmd)+" "+execSync(ip_cmd);
   } catch (e) {
     return e.message;
   }
