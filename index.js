@@ -18,14 +18,24 @@ var local_filename = function(hash) {
   return dir+"/"+hash+".c";
 }
 
-var compile = function(id, debug) {
-  var c = execSync("clang -O2 -Wall -target bpf -c "+ local_filename(id) +" -o "+ id +".o");
-  return c;
+var compile_bpf = function(id, debug) {
+  var clang_cmd = "clang --verbose -O2 -Wall -target bpf -c "+ local_filename(id) +" -o "+ id +".o";
+  try {
+    return execSync(clang_cmd);
+  } catch (e) {
+    return e.message;
+  }
 };
 
 // TODO: review the caching.
 app.post('/compile', function (req, res) {
   var data = req.body.input_code;
+
+// Return a example
+  if (data.length == 0) {
+    return "// waiting for input, todo send example\n"
+  }
+
   var hash = crypto.createHash('md5').update(data).digest("hex");
   var path = local_filename(hash);
 
@@ -38,21 +48,8 @@ app.post('/compile', function (req, res) {
       });
   }
 
-  var compilation_results = compile(hash, req.body.is_debug);
-  res.send({id: hash, results: compilation_results});
-});
-
-app.get('/download/:hash', function (req, res) {
-  var hash = req.params.hash;
-  var path = local_filename(hash);
-
-  if (!hash.match("[a-fA-F0-9]{32}") || !fs.existsSync(path)) {
-      a_log("invalid  download  request, redirect to  help for "+hash);
-      res.redirect('/help');
-      return ;
-  }
-  a_log("download request for "+path);
-  res.download(path);
+  var results = compile_bpf(hash, req.body.is_debug);
+  res.send({id: hash, results: results});
 });
 
 app.get('/app_version', function(req, res){

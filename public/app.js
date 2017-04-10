@@ -16,8 +16,8 @@ let controller = app.controller('MainController', ['$scope', '$http', function (
       }
     }
     $http(req).then(function(res){
-      $scope.compilation_results = res.data.results;
       console.log(res);
+      $scope.compilation_results = res.data.results;
       $scope.rule_id = res.data.id;
     }, function(){
     });
