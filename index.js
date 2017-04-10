@@ -1,3 +1,4 @@
+var execFileSync = require('child_process').execFileSync;
 var execSync = require('child_process').execSync;
 var bodyParser = require('body-parser');
 var pjson = require('./package.json');
@@ -21,15 +22,23 @@ var local_filename = function(name, suffix) {
 var compile_bpf = function(id, debug) {
   var obj_file = local_filename(id, ".o");
   var src_file = local_filename(id, ".c");
-  var clang_cmd = "clang -O2 -Wall -target bpf -c " + src_file +" -o " + obj_file;
-  // TODO: use the test framework recently submitted upstream.
-  var ip_cmd = "ip link set dev etho xdp obj "+ obj_file +" sec xdp ";
+  var output = "";
 
   try {
-    return execSync(clang_cmd)+" "+execSync(ip_cmd);
+    var clang_cmd = execFileSync('/usr/bin/clang',
+      ["-O2", "-Wall", "-target", "bpf", "-c", src_file, "-o", obj_file], {
+	cwd: process.cwd(),
+	env: process.env,
+	stdio: 'pipe',
+	encoding: 'utf-8'
+      });
+    if (clang_cmd)
+      output += clang_cmd.output;
+    // TODO: use the test framework recently submitted upstream.
   } catch (e) {
     return e.message;
   }
+  return output;
 };
 
 // TODO: review the caching.
