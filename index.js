@@ -13,15 +13,18 @@ var a_log = function(output) {
   console.log(new Date()+" "+output);
 }
 
-var local_filename = function(hash) {
+var local_filename = function(name, suffix) {
   var dir = app.get('STORAGE_DIR') || "/tmp";
-  return dir+"/"+hash+".c";
+  return dir+"/"+name+suffix;
 }
 
 var compile_bpf = function(id, debug) {
-  var clang_cmd = "clang -O2 -Wall -target bpf -c "+ local_filename(id) +" -o "+ id +".o";
+  var obj_file = local_filename(id, ".o");
+  var src_file = local_filename(id, ".c");
+  var clang_cmd = "clang -O2 -Wall -target bpf -c " + src_file +" -o " + obj_file;
   // TODO: use the test framework recently submitted upstream.
-  var ip_cmd = "ip link set dev etho xdp obj "+ id +".o sec xdp ";
+  var ip_cmd = "ip link set dev etho xdp obj "+ obj_file +" sec xdp ";
+
   try {
     return execSync(clang_cmd)+" "+execSync(ip_cmd);
   } catch (e) {
@@ -33,7 +36,7 @@ var compile_bpf = function(id, debug) {
 app.post('/compile', function (req, res) {
   var data = req.body.input_code;
   var hash = crypto.createHash('md5').update(data).digest("hex");
-  var path = local_filename(hash);
+  var path = local_filename(hash, ".c");
 
   // TODO: review failure states
   if (!fs.existsSync(path)) {
