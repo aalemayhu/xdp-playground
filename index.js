@@ -30,12 +30,6 @@ var compile_bpf = function(id, debug) {
 // TODO: review the caching.
 app.post('/compile', function (req, res) {
   var data = req.body.input_code;
-
-// Return a example
-  if (data.length == 0) {
-    return "// waiting for input, todo send example\n"
-  }
-
   var hash = crypto.createHash('md5').update(data).digest("hex");
   var path = local_filename(hash);
 
