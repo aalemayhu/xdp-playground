@@ -1,0 +1,2 @@
+o use systemd service to keep the application around.
+o use new test framework patches.
