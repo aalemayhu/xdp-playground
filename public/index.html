@@ -23,11 +23,10 @@
 				    placeholder="Insert / write your XDP program here">
 	</textarea>
       </div>
-      <div ng-if="compilation_results.length > 0">
+      <div>
 	<textarea readonly
            rows="{{ number_of_rows(compilation_results) }}" cols="200" type="text" ng-model="compilation_results">
 	</textarea>
-	<a id="download" href="/download/{{rule_id}}">Download</a>
       </div>
       <div>
         <h3>Useful Links</h3>
