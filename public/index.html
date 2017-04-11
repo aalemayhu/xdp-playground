@@ -7,25 +7,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js">
     </script>
     <script src="app.js"></script>
-    <link rel="stylesheet" type="text/css" href="app.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   </head>
   <body ng-controller="MainController">
-    <div>
+    <div class="container">
       <h1>xdp-playground<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
-        <!-- old rules -->
-      <div>
 	<textarea 
             autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"
 	ng-change="input_code_changed(this)"
- rows="15" cols="200" type="text" ng-model="input_code"
+ rows="15" cols="80%" type="text" ng-model="input_code"
 				    placeholder="Insert / write your XDP program here">
 	</textarea>
-      </div>
-      <div>
-	<textarea readonly
-           rows="15" cols="200" type="text" ng-model="compilation_results">
+        <textarea readonly ng-if="compilation_results.length > 0"
+           rows="15" cols="80%" type="text" ng-model="compilation_results">
 	</textarea>
-      </div>
       <div>
         <h3>Useful Links</h3>
       <ul>
@@ -33,7 +29,7 @@
         <li><a href="https://github.com/cilium/cilium">Cilium</a></li>
       </ul>
       </div>
-      <strong ng-if="versions != 'xyz'">using {{ versions }}</strong>
+      <code ng-if="versions != 'xyz'">{{ versions }}</code>
     </div>
   </body>
 </html>
