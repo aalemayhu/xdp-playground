@@ -17,7 +17,7 @@
       <hr>
       <div class="container">
 	This is task <span class="badge badge-default">{{ task_number }}</span> of the XDP Playground
-	<p>{{ task_description }}</p>
+        <p ng-bind-html="task_description"></p>
       </div>
 	<textarea 
             autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"

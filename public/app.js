@@ -13,15 +13,16 @@ var GetTaskNumber = function(t) {
   return number;
 }
 
-let controller = app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
+let controller = app.controller('MainController', ['$scope', '$http', '$sce',
+  function ($scope, $http, $sce) {
 
 var LoadTask = function(task) {
   $scope.task_number = task;
   $http({
     method: 'GET',
-    url: "tasks/"+$scope.task_number+".txt"
+    url: "tasks/"+$scope.task_number+".html"
   }).then(function successCallback(response) {
-    $scope.task_description = response.data;
+    $scope.task_description = $sce.trustAsHtml(response.data);
   }, function errorCallback(response) {
     // TODO: handle this.
   });
