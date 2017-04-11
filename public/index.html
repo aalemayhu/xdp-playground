@@ -12,8 +12,6 @@
   <body ng-controller="MainController">
     <div>
       <h1>xdp-playground<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
-        <strong ng-if="versions != 'xyz'">using {{ versions }}</strong>
-      </p>
         <!-- old rules -->
       <div>
 	<textarea 
@@ -31,10 +29,11 @@
       <div>
         <h3>Useful Links</h3>
       <ul>
-        <li><a href="http://prototype-kernel.readthedocs.io/en/latest/index.html">Prototype Kernel<a></li>
-        <li><a href="https://github.com/cilium/cilium">Cilium<a></li>
+        <li><a href="http://prototype-kernel.readthedocs.io/en/latest/index.html">Prototype Kernel</a></li>
+        <li><a href="https://github.com/cilium/cilium">Cilium</a></li>
       </ul>
       </div>
+      <strong ng-if="versions != 'xyz'">using {{ versions }}</strong>
     </div>
   </body>
 </html>
