@@ -1,7 +1,35 @@
 let app = angular.module('xdp-playground', []);
 
+var SetTaskNumber = function(t) {
+  localStorage.setItem("task_number", t);
+}
+
+var GetTaskNumber = function(t) {
+  var number = localStorage.getItem("task_number");
+
+  if (!number) {
+    return 0;
+  }
+  return number;
+}
+
 let controller = app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
-  $scope.input_code_changed = function(obj, $event) {
+
+var LoadTask = function(task) {
+  $scope.task_number = task;
+  $http({
+    method: 'GET',
+    url: "tasks/"+$scope.task_number+".txt"
+  }).then(function successCallback(response) {
+    $scope.task_description = response.data;
+  }, function errorCallback(response) {
+    // TODO: handle this.
+  });
+};
+
+LoadTask(GetTaskNumber());
+
+$scope.input_code_changed = function(obj, $event) {
     let input_code = obj.input_code;
 
     var req = {
