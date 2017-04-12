@@ -19,16 +19,21 @@
 	This is task <span class="badge badge-default">{{ task_number }}</span> of the {{ title }}
         <p ng-bind-html="task_description"></p>
       </div>
-	<textarea 
+        <div class="mt-2 col-md-12">
+	<textarea class="form-control"
             autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"
 	ng-change="input_code_changed(this)"
  rows="15" cols="80%" type="text" ng-model="input_code"
 				    placeholder="Insert / write your XDP program here">
 	</textarea>
-        <textarea readonly ng-if="compilation_results.length > 0"
+        </div>
+        <div class="mt-2 col-md-12">
+        <textarea class="form-control" readonly ng-if="compilation_results.length > 0"
            rows="15" cols="80%" type="text" ng-model="compilation_results">
 	</textarea>
+        </div>
       <div>
+        <div class="mt-2 col-md-12">
       <div class="dropdown">
 	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	  Load challenge
@@ -38,6 +43,8 @@
 							ng-click="LoadChallenge(c)">{{ c }}</button>
 	</div>
       </div>
+        </div>
+        <hr>
         <h3>Useful Links</h3>
       <ul>
         <li><a href="http://prototype-kernel.readthedocs.io/en/latest/index.html">Prototype Kernel</a></li>
