@@ -17,7 +17,6 @@ use a different name to ease some kind of logical grouping, that is okay.
 
 - TODO: mention limitations of the angular html bindining (&lt, &gt).
 - TODO: explain how tasks are verified by [`bpf_prog_test_run_xdp`][1].
-- TODO: setup domain https://playground.xdp.no/
 
 [0]: http://prototype-kernel.readthedocs.io/en/latest/networking/XDP/introduction.html#what-is-xdp
 [1]: https://patchwork.ozlabs.org/patch/745468/
