@@ -13,11 +13,20 @@ var GetTaskNumber = function(t) {
   return number;
 }
 
+let Challenges = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, "c"];
+
+// TODO: Make this a open challenge, so users can pick where they want to start.
+
 let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   function ($scope, $http, $sce) {
 
+  $scope.Challenges = Challenges;
+
 var LoadTask = function(task) {
   $scope.task_number = task;
+  if ($scope.task_number == "c") {
+        $scope.task_number = "contribute";
+  }
   $http({
     method: 'GET',
     url: "tasks/"+$scope.task_number+".html"
