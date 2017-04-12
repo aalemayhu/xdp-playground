@@ -7,8 +7,16 @@ also the program execution part is progressing.
 
 ## Adding a challenge
 
-TODO: explain structure of tasks/$task.txt
-TODO: how explain how tasks are verified by [`bpf_prog_test_run_xdp`][1].
+HTML is used for the tasks so that the challenge writer has flexibility to
+present the challenge. To create new challenge you just need to add a file to
+`public/tasks` which has a `.html` suffix and is listed in the `Challenges`
+array. So your challenge could in `public/tasks/7.html` or some other number.
+Please note that using numbers is not a strong requirement, but encouraged.  If
+you'd like to use a different name to ease some kind of logical grouping, that
+is okay.
+
+- TODO: mention limitations of the angular html bindining (&lt, &gt).
+- TODO: explain how tasks are verified by [`bpf_prog_test_run_xdp`][1].
 
 [0]: http://prototype-kernel.readthedocs.io/en/latest/networking/XDP/introduction.html#what-is-xdp
 [1]: https://patchwork.ozlabs.org/patch/745468/
