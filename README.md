@@ -8,7 +8,7 @@ also the program execution part is progressing.
 ## Adding a challenge
 
 HTML is used for the tasks so that the challenge writer has flexibility to
-present the challenge. To create new challenge you just need to add a file to
+present the challenge. To create a new challenge you just need to add a file to
 `public/tasks` which has a `.html` suffix and is listed in the `Challenges`
 array. So your challenge could be in e.g. `public/tasks/7.html` or some other
 number.  Please note that using numbers is not a strong requirement, but
