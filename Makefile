@@ -23,3 +23,9 @@ systemd:
 	systemctl enable $(service_file)
 	systemctl start $(project)
 	systemctl status $(service_file)
+
+tester:
+	useradd -M tester
+	usermod -L tester
+	mkdir /home/tester
+	chown -R tester:tester /home/tester
