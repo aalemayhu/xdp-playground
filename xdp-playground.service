@@ -1,0 +1,15 @@
+[Unit]
+Description=A place to experiment with XDP
+
+[Service]
+ExecStart=/usr/local/bin/node /srv/app
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=xdp-playground
+User=tester
+Environment=NODE_ENV=production PORT=8080
+
+[Install]
+WantedBy=multi-user.target
