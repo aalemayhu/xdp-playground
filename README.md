@@ -18,6 +18,18 @@ use a different name to ease some kind of logical grouping, that is okay.
 - TODO: mention limitations of the angular html bindining (&lt, &gt).
 - TODO: explain how tasks are verified by [`bpf_prog_test_run_xdp`][1].
 
+## Run XDP Playground on your machine
+
+Install the JavaScript dependencies for the server
+
+    make setup
+
+Start the application
+
+     make serve
+
+Should be running at `http://localhost:8080`.
+
 [0]: http://prototype-kernel.readthedocs.io/en/latest/networking/XDP/introduction.html#what-is-xdp
 [1]: https://patchwork.ozlabs.org/patch/745468/
 [t]: public/tasks/TEMPLATE.html
