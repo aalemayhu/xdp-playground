@@ -1,4 +1,4 @@
-# xdp-playground
+# XDP Playground
 
 A place to experiment with [XDP][0]. The idea is to have a interactive place
 with some challenges that teach you more about XDP while you experiment. This
