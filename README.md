@@ -15,11 +15,13 @@ present the challenge. To create a new challenge you need to
   base.  Please note that using numbers is not a strong requirement, but the
   file must have `.html` suffix.  If you'd like to use a different name to ease
   some kind of logical grouping, that is fine.
-- TODO: Write test program to verify the user program by using [`bpf_prog_test_run_xdp`][1].
+- TODO: Write test program to verify the user program by using
+  [`bpf_prog_test_run_xdp`][1].
 - Add your task to the `Challenges` array.
 
 If your files contain `<` or `>` you might have to replace them with `&lt` and
-`&gt`. Please review your challenge description for visual defects.
+`&gt`. Please review your challenge description for visual defects and report
+the it on the [issue tracker][it].
 
 ## Run XDP Playground on your machine
 
@@ -36,3 +38,4 @@ Should be running at `http://localhost:8080`.
 [0]: http://prototype-kernel.readthedocs.io/en/latest/networking/XDP/introduction.html#what-is-xdp
 [1]: https://patchwork.ozlabs.org/patch/745468/
 [t]: public/tasks/TEMPLATE.html
+[it]: https://github.com/scanf/xdp-playground/issues
