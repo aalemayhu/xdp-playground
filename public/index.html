@@ -29,6 +29,15 @@
            rows="15" cols="80%" type="text" ng-model="compilation_results">
 	</textarea>
       <div>
+      <div class="dropdown">
+	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  Load challenge
+	</button>
+	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	  <button class="dropdown-item" ng-repeat="c in Challenges" ng-model="selected_challenge"
+							ng-click="LoadChallenge(c)">{{ c }}</button>
+	</div>
+      </div>
         <h3>Useful Links</h3>
       <ul>
         <li><a href="http://prototype-kernel.readthedocs.io/en/latest/index.html">Prototype Kernel</a></li>

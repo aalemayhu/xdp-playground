@@ -13,9 +13,7 @@ var GetTaskNumber = function(t) {
   return number;
 }
 
-let Challenges = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, "c"];
-
-// TODO: Make this a open challenge, so users can pick where they want to start.
+let Challenges = [0, "c"];
 
 let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   function ($scope, $http, $sce) {
@@ -24,7 +22,8 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
 
   $scope.Challenges = Challenges;
 
-var LoadTask = function(task) {
+$scope.LoadChallenge = function(task) {
+  console.log("LoadChallenge "+task);
   $scope.task_number = task;
   if ($scope.task_number == "c") {
         $scope.task_number = "contribute";
@@ -39,7 +38,7 @@ var LoadTask = function(task) {
   });
 };
 
-LoadTask(GetTaskNumber());
+$scope.LoadChallenge(GetTaskNumber());
 
 $scope.input_code_changed = function(obj, $event) {
     let input_code = obj.input_code;
