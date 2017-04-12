@@ -8,15 +8,18 @@ also the program execution part is progressing.
 ## Adding a challenge
 
 HTML is used for the tasks so that the challenge writer has flexibility to
-present the challenge. To create a new challenge you just need to add a file to
-`public/tasks` which has a `.html` suffix and is listed in the `Challenges`
-array. You can use the [public/tasks/TEMPLATE.html][t] as base. So your challenge
-could be in e.g. `public/tasks/7.html` or some other number.  Please note that
-using numbers is not a strong requirement, but encouraged.  If you'd like to
-use a different name to ease some kind of logical grouping, that is okay.
+present the challenge. To create a new challenge you need to
 
-- TODO: mention limitations of the angular html bindining (&lt, &gt).
-- TODO: explain how tasks are verified by [`bpf_prog_test_run_xdp`][1].
+- Create a new HTML file in `public/tasks`, for example `public/tasks/7.html`
+  or some other number.  You can use the [public/tasks/TEMPLATE.html][t] as
+  base.  Please note that using numbers is not a strong requirement, but the
+  file must have `.html` suffix.  If you'd like to use a different name to ease
+  some kind of logical grouping, that is fine.
+- TODO: Write test program to verify the user program by using [`bpf_prog_test_run_xdp`][1].
+- Add your task to the `Challenges` array.
+
+If your files contain `<` or `>` you might have to replace them with `&lt` and
+`&gt`. Please review your challenge description for visual defects.
 
 ## Run XDP Playground on your machine
 
