@@ -1,7 +1,10 @@
 [Unit]
 Description=A place to experiment with XDP
+After=network.target
 
 [Service]
+WorkingDirectory=/srv/app
+Type=forking
 ExecStart=/usr/local/bin/node /srv/app/index.js
 Restart=always
 RestartSec=10
