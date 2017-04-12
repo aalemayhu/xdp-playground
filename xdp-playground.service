@@ -2,7 +2,7 @@
 Description=A place to experiment with XDP
 
 [Service]
-ExecStart=/usr/local/bin/node /srv/app
+ExecStart=/usr/local/bin/node /srv/app/index.js
 Restart=always
 RestartSec=10
 StandardOutput=syslog
