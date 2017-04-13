@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "fedora/25-cloud-base"
   config.vm.provision "shell", inline: <<-SHELL
      dnf update -y
-     dnf install -y make tmux wget
+     dnf install -y make tmux wget unzip
      dnf install -y llvm llvm-libs llvm-doc clang clang-libs
      dnf install -y bcc bcc-tools bcc-doc --enablerepo=updates-testing
      dnf install -y kernel-devel
