@@ -15,9 +15,13 @@ present the challenge. To create a new challenge you need to
   base.  Please note that using numbers is not a strong requirement, but the
   file must have a unique valid UNIX name and a `.html` suffix.  If you'd like
   to use a name to ease some kind of logical grouping, that is fine.
-- TODO: Write test program to verify the user program by using
-  [`bpf_prog_test_run_xdp`][1].
-- Add your task to the `Challenges` array.
+- When you are happy with the task description, the next thing is to write a
+  program which uses [`bpf_prog_test_run_xdp`][1] to verify the users input.
+  This program must be placed in a separate directory under `public/tasks/7/`.
+  The name has to match the HTML file so it gets loaded properly. You also have
+  to include a directory in the Makefile, you could for example use
+  `public/tasks/TEMPLATE.Makefile`.
+- Add your task to the `Challenges` array in the [Angular app][aa].
 
 If your files contain `<` or `>` you might have to replace them with `&lt` and
 `&gt`. Please review your challenge description for visual defects and report
@@ -39,3 +43,4 @@ Should be running at `http://localhost:8080`.
 [1]: https://patchwork.ozlabs.org/patch/745468/
 [t]: public/tasks/TEMPLATE.html
 [it]: https://github.com/scanf/xdp-playground/issues
+[aa]: https://github.com/scanf/xdp-playground/blob/master/public/app.js#L1

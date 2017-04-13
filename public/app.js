@@ -1,3 +1,5 @@
+let Challenges = [0, "c"]; // Please don't move this line.
+
 let app = angular.module('xdp-playground', []);
 
 var SetTaskNumber = function(t) {
@@ -12,8 +14,6 @@ var GetTaskNumber = function(t) {
   }
   return number;
 }
-
-let Challenges = [0, "c"];
 
 let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   function ($scope, $http, $sce) {
