@@ -8,9 +8,9 @@ var SetTaskNumber = function(t) {
 
 var GetTaskNumber = function(t) {
   var number = localStorage.getItem("task_number");
-
+  // If the user is here for the "first" time show them the intro.
   if (!number) {
-    return 0;
+    return 'intro';
   }
   return number;
 }
@@ -23,7 +23,7 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   $scope.Challenges = Challenges;
 
 $scope.LoadChallenge = function(task) {
-  console.log("LoadChallenge "+task);
+  SetTaskNumber(task);
   $scope.task_number = task;
   if ($scope.task_number == "c") {
         $scope.task_number = "contribute";

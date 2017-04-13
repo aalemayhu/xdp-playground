@@ -18,11 +18,13 @@
       <h1>{{ title }}<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
       <hr>
       <div class="container">
-	This is task <span class="badge badge-default">{{ task_number }}</span> of the {{ title }}
+        <div ng-if="task_number != 'intro'">
+          This is task <span class="badge badge-default">{{ task_number }}</span> of the {{ title }}
+        </div>
         <p ng-bind-html="task_description"></p>
       </div>
         <div class="mt-2 col-md-12">
-	<textarea class="form-control prettyprint"
+	<textarea class="form-control prettyprint" ng-if="task_number != 'intro'"
             autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"
 	ng-change="input_code_changed(this)"
  rows="15" cols="80%" type="text" ng-model="input_code"
