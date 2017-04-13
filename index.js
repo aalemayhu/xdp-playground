@@ -15,8 +15,8 @@ var a_log = function(output) {
 }
 
 var local_filename = function(name, suffix) {
-  var dir = app.get('STORAGE_DIR') || "/tmp";
-  return dir+"/"+name+suffix;
+  var dir = app.get('STORAGE_DIR') || "/";
+  return dir+"/tmp/"+name+suffix;
 }
 
 var compile_bpf = function(id, debug) {
@@ -41,23 +41,48 @@ var compile_bpf = function(id, debug) {
   return output;
 };
 
-// TODO: review the caching.
+var generic_err_msg = function(hash) {
+  return "There was a error saving your program for compilation, "+
+    "please report this on Github with the program and id "+hash;
+};
+
+/**
+ * /compile - Take the user input and create a hash from it. Use the hash to
+ * store a temporarily C file that can be used by clang for compilation. If
+ * writing the file fails user should get a error message. If file already
+ * exists it gets logged. Then hash is passed til compile_bpf and the results
+ * is returned to the client.
+ */
 app.post('/compile', function (req, res) {
   var data = req.body.input_code;
   var hash = crypto.createHash('md5').update(data).digest("hex");
   var path = local_filename(hash, ".c");
+  var results = "";
 
-  // TODO: review failure states
-  if (!fs.existsSync(path)) {
+  a_log("recieved "+data);
+
+  /* We want to capture this because of the various UNIX specific errors that
+   * could occur like EACCES or other JavaScript issues.
+   */
+  try {
+    if (!fs.existsSync(path)) {
       fs.writeFile(path, data, function(err) {
-	if (err) {
-	  a_log(err);
-	}
+        if (err) {
+          a_log("writeFile "+err);
+	  res.send({id: hash, results: generic_err_msg(hash)});
+        } else {
+          a_log("writeFile "+path);
+	  res.send({id: hash, results: compile_bpf(hash, req.body.is_debug)});
+        }
       });
+    } else {
+      a_log("No errors so far so we can compile "+hash+" using cache -> "+path);
+      res.send({id: hash, results: compile_bpf(hash, req.body.is_debug)});
+    }
+  } catch(e) {
+    a_log(e);
+    res.send({id: hash, results: generic_err_msg(hash)});
   }
-
-  var results = compile_bpf(hash, req.body.is_debug);
-  res.send({id: hash, results: results});
 });
 
 app.get('/app_version', function(req, res){
