@@ -26,9 +26,11 @@ the same name as the challenge e.g. `bpf_prog_load("7.o", ...)`.
 
 If you have done the above correctly you should end up with something like
 
-    public/tasks/7/
-    ├── Makefile
-    └── test_run.c
+    public/tasks/
+    ├── 7
+    │   ├── Makefile
+    │   └── test_run.c
+    └── 7.html
 
 If your HTML files contain `<` or `>` you might have to replace them with `&lt`
 and `&gt`. Please review your challenge description for visual defects and
