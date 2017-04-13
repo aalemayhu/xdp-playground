@@ -12,3 +12,8 @@ application.  Also the server needs a fairly new kernel where the Angular
 application only needs a JavaScript environment, it's dependencies and
 something serving like NGINX so the URLs are mapped correctly. For now having
 it in one place works, but this should be fixed overtime.
+
+o check for success when running `test_run`
+
+If the result is good user gets congratulated with dialog and is requested to
+load next challenge. Otherwise user is greeted with a error message.
