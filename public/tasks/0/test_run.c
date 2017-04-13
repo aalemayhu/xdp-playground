@@ -7,7 +7,7 @@
 int main(void)
 {
 	static char log_buf[BPF_LOG_BUF_SIZE];
-	const char *file = "xdp_hello.o";
+	const char *file = "0.o";
 	struct bpf_object *obj;
 	int err, fd;
 
