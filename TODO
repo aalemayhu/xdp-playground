@@ -1,1 +1,14 @@
 o use new test framework patches.
+
+Have to create a setup for writing the verification programs.  Then those
+programs run the compiled user XDP program.
+
+o The server and UI should be decoupled.
+
+The main reasons being security and flexibility. The server is running user
+input which means that it can crash and take down the UI with it.  Having the
+server in a separate VM reduces the direct impact it has on the web
+application.  Also the server needs a fairly new kernel where the Angular
+application only needs a JavaScript environment, it's dependencies and
+something serving like NGINX so the URLs are mapped correctly. For now having
+it in one place works, but this should be fixed overtime.
