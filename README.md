@@ -23,10 +23,10 @@ HTML is used for the tasks so that the challenge writer has flexibility to
 present the challenge. To create a new challenge you need to
 
 - Create a new HTML file in `public/tasks`, for example `public/tasks/7.html`
-  or some other number.  You can use the [public/tasks/TEMPLATE.html][t] as
-  base. This file will describe your challenge to the user. You might want to
-  include some background information or other descriptions before presenting
-  the task.
+  or some other free number.  You can use the [public/tasks/TEMPLATE.html][t]
+  as base. This file will describe your challenge to the user. You might want
+  to include some background information or other descriptions before
+  presenting the task.
 - When you are happy with the challenge description, the next thing is to write
   a program which uses [`bpf_prog_test_run_xdp`][1] to verify the users input.
   This program must be placed in the directory `public/tasks/7/`. The directory
@@ -49,10 +49,10 @@ If you have done the above correctly you should end up with something like
 
 The environment has a couple of restrictions which should be listed below.
 
-Using numbers for the challenge description file name is not a strong
-requirement, but the file must have a unique valid UNIX name and a `.html`
+The challenge file name must be a unique valid number and have a `.html`
 suffix.  If you'd like to use a name to ease some kind of logical grouping,
-that is fine but check the `public/tasks` directory for conflicts.
+that is fine but check the `public/tasks` directory first to prevent
+conflicts.
 
 If your HTML files contain `<` or `>` you might have to replace them with `&lt`
 and `&gt`. Please review your challenge description for visual defects and

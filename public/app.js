@@ -22,6 +22,8 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
 
   $scope.Challenges = Challenges;
 
+  $scope.isNumber = angular.isNumber;
+
 $scope.LoadChallenge = function(task) {
   SetTaskNumber(task);
   $scope.task_number = task;
