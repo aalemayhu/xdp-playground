@@ -17,10 +17,10 @@ present the challenge. To create a new challenge you need to
   to use a name to ease some kind of logical grouping, that is fine.
 - When you are happy with the task description, the next thing is to write a
   program which uses [`bpf_prog_test_run_xdp`][1] to verify the users input.
-  This program must be placed in a separate directory under `public/tasks/7/`.
-  The name has to match the HTML file so it gets loaded properly. You also have
-  to include a directory in the Makefile, you could for example use
-  `public/tasks/TEMPLATE.Makefile`.
+  This program named `test_run.c` must be placed in a separate directory under
+  `public/tasks/7/`.  The directory name has to match the HTML file so it gets
+  loaded properly. You also have to include a Makefile, you could for example
+  use `public/tasks/TEMPLATE.Makefile`.
 - Add your task to the `Challenges` array in the [Angular app][aa].
 
 If your files contain `<` or `>` you might have to replace them with `&lt` and
