@@ -5,6 +5,18 @@ with some challenges that teach you more about XDP while you experiment. This
 is a work in progress and the framework for writing a challenge is in the works
 also the program execution part is progressing.
 
+## Run XDP Playground on your machine
+
+Install the JavaScript dependencies for the server
+
+    make setup
+
+Start the application
+
+     make serve
+
+Should be running at `http://localhost:8080`.
+
 ## Adding a challenge
 
 HTML is used for the tasks so that the challenge writer has flexibility to
@@ -37,18 +49,6 @@ and `&gt`. Please review your challenge description for visual defects and
 report to the [issue tracker][it].
 
 Thanks.
-
-## Run XDP Playground on your machine
-
-Install the JavaScript dependencies for the server
-
-    make setup
-
-Start the application
-
-     make serve
-
-Should be running at `http://localhost:8080`.
 
 [0]: http://prototype-kernel.readthedocs.io/en/latest/networking/XDP/introduction.html#what-is-xdp
 [1]: https://patchwork.ozlabs.org/patch/745468/
