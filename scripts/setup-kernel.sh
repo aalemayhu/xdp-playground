@@ -9,10 +9,11 @@ kernel_dir=/home/$EXPECTED_USER/linux
 build_helper=/$EXPECTED_USER/scripts/linux-dev
 
 if [ ! -d $kernel_dir ]; then
+  cd /home/$EXPECTED_USER
   wget -nv https://github.com/scanf/linux/archive/$branch
-  mkdir -pv $kernel_dir
+  unzip $branch
+  mv linux-xdp-playground $kernel_dir
   cd $kernel_dir
-  unzip -nj ../$branch
   cp `ls -1 /boot/config*|head -n1` $kernel_dir/.config
   $build_helper build
   $build_helper install
