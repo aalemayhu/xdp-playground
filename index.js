@@ -16,13 +16,18 @@ var a_log = function(output) {
 
 var local_filename = function(name, suffix) {
   var dir = app.get('STORAGE_DIR') || "/";
-  return dir+"/tmp/"+name+suffix;
+  return dir+"tmp/"+name+suffix;
 }
 
-var compile_bpf = function(id, debug) {
+var compile_bpf = function(id, debug, test) {
   var obj_file = local_filename(id, ".o");
   var src_file = local_filename(id, ".c");
+  var test_file = local_filename(test, ".c"); 
+  // TODO: use a different directory for test_file.
   var output = "";
+
+  console.log("compile_bpf");
+  a_log("will compile "+src_file+" to "+obj_file+" and verify with "+test_file);
 
   try {
     var clang_cmd = execFileSync('/usr/bin/clang',
@@ -54,12 +59,10 @@ var generic_err_msg = function(hash) {
  * is returned to the client.
  */
 app.post('/compile', function (req, res) {
+  var task_number = req.body.task_number;
   var data = req.body.input_code;
   var hash = crypto.createHash('md5').update(data).digest("hex");
   var path = local_filename(hash, ".c");
-  var results = "";
-
-  a_log("recieved "+data);
 
   /* We want to capture this because of the various UNIX specific errors that
    * could occur like EACCES or other JavaScript issues.
@@ -72,16 +75,25 @@ app.post('/compile', function (req, res) {
 	  res.send({id: hash, results: generic_err_msg(hash)});
         } else {
           a_log("writeFile "+path);
-	  res.send({id: hash, results: compile_bpf(hash, req.body.is_debug)});
+	  res.send( {
+	    id: hash, 
+	    results: compile_bpf(hash, req.body.is_debug, task_number)
+	  });
         }
       });
     } else {
       a_log("No errors so far so we can compile "+hash+" using cache -> "+path);
-      res.send({id: hash, results: compile_bpf(hash, req.body.is_debug)});
+      res.send({
+	id: hash, 
+	results: compile_bpf(hash, req.body.is_debug, task_number)
+      });
     }
   } catch(e) {
     a_log(e);
-    res.send({id: hash, results: generic_err_msg(hash)});
+    res.send({
+      id: hash,
+      results: generic_err_msg(hash)
+    });
   }
 });
 

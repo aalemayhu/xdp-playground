@@ -51,7 +51,8 @@ $scope.input_code_changed = function(obj, $event) {
       },
       data: {
         input_code: input_code,
-        is_debug: false
+        is_debug: false,
+        task_number: $scope.task_number
       }
     }
     $http(req).then(function(res){
