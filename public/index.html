@@ -39,8 +39,8 @@
 	  Load challenge
 	</button>
 	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <button ng-class="c == task_number ? 'dropdown-item' : 'dropdown-item disabled'" ng-repeat="c in Challenges"
-                                        ng-click="LoadChallenge(c)">{{ c }}</button>
+          <button ng-class="c == task_number ? 'dropdown-item disabled' : 'dropdown-item'" ng-repeat="c in Challenges"
+                                        ng-click="LoadChallenge(c)">Challenge {{ c }}</button>
 	</div>
       </div>
         </div>
