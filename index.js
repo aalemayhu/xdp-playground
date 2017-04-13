@@ -12,37 +12,53 @@ app.use(bodyParser.json());
 
 var a_log = function(output) {
   console.log(new Date()+" "+output);
-}
+};
+
+var a_cmd = function(cmd) {
+  a_log("CMD "+cmd);
+  execSync(cmd);
+};
 
 var local_filename = function(name, suffix) {
   var dir = app.get('STORAGE_DIR') || "/";
   return dir+"tmp/"+name+suffix;
 }
 
-var compile_bpf = function(id, debug, test) {
-  var obj_file = local_filename(id, ".o");
-  var src_file = local_filename(id, ".c");
-  var test_file = local_filename(test, ".c"); 
-  // TODO: use a different directory for test_file.
+var verify_xdp_program = function(id, debug, test) {
+  var xdp_program = local_filename(id, ".c");
+  var test_dir = local_filename(id, "");
+  var obj_file = test_dir+"/"+test+".o";
   var output = "";
 
-  console.log("compile_bpf");
-  a_log("will compile "+src_file+" to "+obj_file+" and verify with "+test_file);
-
+  a_cmd("mkdir -pv "+test_dir);
   try {
-    var clang_cmd = execFileSync('/usr/bin/clang',
-      ["-O2", "-Wall", "-target", "bpf", "-c", src_file, "-o", obj_file], {
-	cwd: process.cwd(),
-	env: process.env,
-	stdio: 'pipe',
-	encoding: 'utf-8'
-      });
-    if (clang_cmd)
-      output += clang_cmd.output;
-    // TODO: use the test framework recently submitted upstream.
+    if (!fs.existsSync(test_dir)) {
+      throw "Test directory does not exist";
+    }
+    // TODO: check the copy command.
+    a_cmd("cp public/tasks/"+test+"/* "+test_dir);
+    try {
+      var clang_cmd = execFileSync('/usr/bin/clang',
+        ["-O2", "-Wall", "-target", "bpf", "-c", xdp_program, "-o", obj_file], {
+          cwd: process.cwd(),
+          env: process.env,
+          stdio: 'pipe',
+          encoding: 'utf-8'
+        });
+      if (clang_cmd)
+        output += clang_cmd.output;
+      // TODO: use the test framework recently submitted upstream to run the test.
+      // Comment above can be deleted when the below works.
+      a_cmd("make -C "+test_dir);
+      output += execFileSync(test_dir+"/test_run");
+    } catch (e) {
+      return e.message;
+    }
   } catch (e) {
-    return e.message;
+    a_log(e);
+    return generic_err_msg(id)
   }
+
   return output;
 };
 
@@ -55,9 +71,10 @@ var generic_err_msg = function(hash) {
  * /compile - Take the user input and create a hash from it. Use the hash to
  * store a temporarily C file that can be used by clang for compilation. If
  * writing the file fails user should get a error message. If file already
- * exists it gets logged. Then hash is passed til compile_bpf and the results
- * is returned to the client.
+ * exists it gets logged. Then hash is passed til verify_xdp_program and the
+ * results is returned to the client.
  */
+// TODO: add a user specific has to avoid collision based on two users writing the same program.
 app.post('/compile', function (req, res) {
   var task_number = req.body.task_number;
   var data = req.body.input_code;
@@ -77,7 +94,7 @@ app.post('/compile', function (req, res) {
           a_log("writeFile "+path);
 	  res.send( {
 	    id: hash, 
-	    results: compile_bpf(hash, req.body.is_debug, task_number)
+	    results: verify_xdp_program(hash, req.body.is_debug, task_number)
 	  });
         }
       });
@@ -85,7 +102,7 @@ app.post('/compile', function (req, res) {
       a_log("No errors so far so we can compile "+hash+" using cache -> "+path);
       res.send({
 	id: hash, 
-	results: compile_bpf(hash, req.body.is_debug, task_number)
+	results: verify_xdp_program(hash, req.body.is_debug, task_number)
       });
     }
   } catch(e) {
