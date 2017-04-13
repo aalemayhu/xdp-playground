@@ -1,12 +1,10 @@
-let Challenges = [0, "contribute", "references"]; // Please don't move this line.
-
 let app = angular.module('xdp-playground', []);
 
 var SetTaskNumber = function(t) {
   localStorage.setItem("task_number", t);
 }
 
-var GetTaskNumber = function(t) {
+var GetTaskNumber = function() {
   var number = localStorage.getItem("task_number");
   // If the user is here for the "first" time show them the intro.
   if (!number) {
@@ -20,7 +18,14 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
 
   $scope.title = "XDP Playground";
 
-  $scope.Challenges = Challenges;
+  $http({
+    method: 'GET',
+    url: '/tasks'
+  }).then(function successCallback(response) {
+    $scope.Challenges = response.data;
+    $scope.LoadChallenge(GetTaskNumber());
+  }, function errorCallback(response) {
+  });
 
   $scope.isNumber = angular.isNumber;
 
@@ -36,8 +41,6 @@ $scope.LoadChallenge = function(task) {
     // TODO: handle this.
   });
 };
-
-$scope.LoadChallenge(GetTaskNumber());
 
 $scope.input_code_changed = function(obj, $event) {
     let input_code = obj.input_code;

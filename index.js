@@ -137,6 +137,19 @@ app.get('/version', function(req, res){
   res.send(kernel+" and "+clang);
 });
 
+app.get('/tasks', function(req, res){
+  fs.readdir('public/tasks/', (err, files) => {
+    var pages = [];
+    for (i in files) {
+      let f = files[i];
+      if (f.endsWith("html")) {
+        pages.push(f.replace(/\.[^/.]+$/, ""));
+      }
+    }
+    res.send(pages);
+  })
+});
+
 app.get('*', function(req, res) {
       res.redirect('/');
 });

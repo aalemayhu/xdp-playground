@@ -35,7 +35,6 @@ present the challenge. To create a new challenge you need to
   the template at `public/tasks/TEMPLATE.Makefile`. The BPF program you are
   loading should have the same name as the challenge e.g.
   `bpf_prog_load("7.o", ...)`.
-- Add your task to the `Challenges` array in the [Angular app][aa].
 
 If you have done the above correctly you should end up with something like
 
