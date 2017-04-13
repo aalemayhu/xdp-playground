@@ -30,7 +30,6 @@ int main(void)
 	// Why not bpf_prog_test_run_xdp(...) ?
 	err = bpf_prog_test_run(prog_fd, 3, NULL, 0, NULL, NULL, &retval, &duration);
 	CHECK(err || errno || retval, "", "err %d errno %d retval %d duration %d\n",
-
 	      err, errno, retval, duration);
 
 	bpf_object__close(obj);
