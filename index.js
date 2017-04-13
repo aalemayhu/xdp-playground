@@ -4,8 +4,10 @@ var bodyParser = require('body-parser');
 var pjson = require('./package.json');
 var express = require('express');
 var crypto = require('crypto');
+var marked = require('marked');
 var fs = require('fs');
 var app = express();
+
 
 app.use(express.static('public'))
 app.use(bodyParser.json());
@@ -116,6 +118,17 @@ app.post('/compile', function (req, res) {
 
 app.get('/app_version', function(req, res){
   res.send(pjson.version);
+});
+
+app.get('/about', function(req, res){
+  fs.readFile('README.md', 'utf8', function (err, data) {
+    if (data) {
+      res.send(marked(data));
+    } else {
+      a_log(err);
+      res.redirect('/');
+    }
+  })
 });
 
 app.get('/version', function(req, res){
