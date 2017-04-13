@@ -13,8 +13,8 @@ present the challenge. To create a new challenge you need to
 - Create a new HTML file in `public/tasks`, for example `public/tasks/7.html`
   or some other number.  You can use the [public/tasks/TEMPLATE.html][t] as
   base.  Please note that using numbers is not a strong requirement, but the
-  file must have `.html` suffix.  If you'd like to use a different name to ease
-  some kind of logical grouping, that is fine.
+  file must have a unique valid UNIX name and a `.html` suffix.  If you'd like
+  to use a name to ease some kind of logical grouping, that is fine.
 - TODO: Write test program to verify the user program by using
   [`bpf_prog_test_run_xdp`][1].
 - Add your task to the `Challenges` array.
