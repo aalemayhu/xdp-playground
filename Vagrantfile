@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
      dnf install -y make tmux wget unzip openssl openssl-devel
      dnf install -y llvm llvm-libs llvm-doc clang clang-libs
      dnf install -y kernel-devel elfutils-libelf-devel vim bc
-     dnf install -y python3-pyroute2 make npm grub2 libcap-devel
+     dnf install -y python3-pyroute2 make npm libcap-devel
      /vagrant/scripts/setup-kernel.sh
   SHELL
   config.vm.provider "virtualbox" do |v|
