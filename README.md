@@ -24,9 +24,17 @@ loaded properly. You also have to include a Makefile, you could for example use
 the same name as the challenge e.g. `bpf_prog_load("7.o", ...)`.
 - Add your task to the `Challenges` array in the [Angular app][aa].
 
-If your files contain `<` or `>` you might have to replace them with `&lt` and
-`&gt`. Please review your challenge description for visual defects and report
-the it on the [issue tracker][it].
+If you have done the above correctly you should end up with something like
+
+    public/tasks/7/
+    ├── Makefile
+    └── test_run.c
+
+If your HTML files contain `<` or `>` you might have to replace them with `&lt`
+and `&gt`. Please review your challenge description for visual defects and
+report to the [issue tracker][it].
+
+Thanks.
 
 ## Run XDP Playground on your machine
 
