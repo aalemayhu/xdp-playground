@@ -1,4 +1,4 @@
-let Challenges = [0, "c"]; // Please don't move this line.
+let Challenges = [0, "contribute", "references"]; // Please don't move this line.
 
 let app = angular.module('xdp-playground', []);
 
@@ -27,9 +27,6 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
 $scope.LoadChallenge = function(task) {
   SetTaskNumber(task);
   $scope.task_number = task;
-  if ($scope.task_number == "c") {
-        $scope.task_number = "contribute";
-  }
   $http({
     method: 'GET',
     url: "tasks/"+$scope.task_number+".html"
