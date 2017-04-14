@@ -1,13 +1,14 @@
 #!/bin/bash
 
 echo "{"
-echo "  \"name\": \"2nft\","
+echo "  \"name\": \"xdp-playground\","
 echo "  \"version\": \"`git describe --tags`\","
 echo "  \"description\": \"web application to experiment with XDP\","
 echo "  \"main\": \"index.js\","
 echo "  \"dependencies\": {"
 echo "    \"body-parser\": \"^1.17.1\","
 echo "    \"express\": \"^4.15.0\","
+echo "    \"marked\": \"^0.3.6\","
 echo "    \"nodemon\": \"^1.11.0\""
 echo "  },"
 echo "  \"devDependencies\": {},"
