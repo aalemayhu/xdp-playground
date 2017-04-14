@@ -11,6 +11,8 @@ Vagrant.configure("2") do |config|
     "virbr0",
     "br-ea29d8fe0632",
     "docker0",
+    "br-95a786f58c25",
+    "br-d43254b827a0",
   ]
   config.vm.provision "shell", inline: <<-SHELL
      dnf update -y
