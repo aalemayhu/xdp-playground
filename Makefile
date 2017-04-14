@@ -6,9 +6,6 @@ serve:
 	npm start
 setup:
 	npm install
-
-update-package-info:
-	scripts/gen-package-meta > package.json
 vps:
 	VBoxManage list runningvms
 vbox:
