@@ -1,6 +1,6 @@
 {
   "name": "xdp-playground",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "web application to experiment with XDP",
   "main": "index.js",
   "dependencies": {
