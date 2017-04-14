@@ -4,7 +4,12 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "xdp-playground"
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.box = "fedora/25-cloud-base"
-  config.vm.network "public_network", use_dhcp_assigned_default_route: true
+  config.vm.network "public_network", bridge: [
+    "enp0s20u5u4",
+    "virbr0",
+    "br-ea29d8fe0632",
+    "docker0",
+  ]
   config.vm.provision "shell", inline: <<-SHELL
      dnf update -y
      dnf install -y bcc bcc-tools bcc-doc --enablerepo=updates-testing
