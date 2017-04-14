@@ -7,7 +7,7 @@ get verified by the playground.
 
 A running instance of the playground is available at https://playground.xdp.no/
 If you'd like to submit a challenge for inclusion to the playground, please
-[Adding a challenge][./Challenge.md]. Writing new challenges is welcomed and
+[Adding a challenge](./Challenge.md). Writing new challenges is welcomed and
 appreciated but other contributions like rewording or typo fixes are also very
 welcome.
 
