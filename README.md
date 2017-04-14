@@ -1,7 +1,7 @@
 > NOTE: This is a work in progress and the framework for writing a challenge is
 > mostly ready what remains is the verification bits and execution verdict of
 > the XDP program. These should hopefully be done soon. You are invited to send
-> patches if you want to see it ready faster. This can be removed when the
+> patches if you want to see it ready sooner. This can be removed when the
 > verification and user feedback is implemented.
 
 # XDP playground
