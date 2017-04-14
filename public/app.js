@@ -27,7 +27,9 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   }, function errorCallback(response) {
   });
 
-  $scope.isNumber = angular.isNumber;
+  $scope.isNumber = function(n) {
+    return !isNaN(n)
+  };
 
 $scope.LoadChallenge = function(task) {
   SetTaskNumber(task);
