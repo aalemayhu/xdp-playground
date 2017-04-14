@@ -17,6 +17,8 @@ vbox:
 vtt:
 	vagrant reload
 	vagrant ssh
+vpackage: vbox
+	vagrant package
 
 systemd:
 	cp $(service_file) /etc/systemd/system/$(service_file)
