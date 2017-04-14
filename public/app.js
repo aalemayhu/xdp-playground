@@ -20,7 +20,7 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
 
   $http({
     method: 'GET',
-    url: '/tasks'
+    url: '/pages'
   }).then(function successCallback(response) {
     $scope.Challenges = response.data;
     $scope.LoadChallenge(GetTaskNumber());
@@ -34,7 +34,7 @@ $scope.LoadChallenge = function(task) {
   $scope.task_number = task;
   $http({
     method: 'GET',
-    url: "tasks/"+$scope.task_number+".html"
+    url: "pages/"+$scope.task_number+".html"
   }).then(function successCallback(response) {
     $scope.task_description = $sce.trustAsHtml(response.data);
   }, function errorCallback(response) {

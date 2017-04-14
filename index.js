@@ -12,6 +12,8 @@ var app = express();
 app.use(express.static('public'))
 app.use(bodyParser.json());
 
+var content_dir = "public/pages";
+
 var a_log = function(output) {
   console.log(new Date()+" "+output);
 };
@@ -38,7 +40,7 @@ var verify_xdp_program = function(id, debug, test) {
       throw "Test directory does not exist";
     }
     // TODO: check the copy command.
-    a_cmd("cp public/tasks/"+test+"/* "+test_dir);
+    a_cmd("cp "+content_dir+"/"+test+"/* "+test_dir);
     try {
       var clang_cmd = execFileSync('/usr/bin/clang',
         ["-O2", "-Wall", "-target", "bpf", "-c", xdp_program, "-o", obj_file], {
@@ -137,8 +139,8 @@ app.get('/version', function(req, res){
   res.send(kernel+" and "+clang);
 });
 
-app.get('/tasks', function(req, res){
-  fs.readdir('public/tasks/', (err, files) => {
+app.get('/pages', function(req, res){
+  fs.readdir(content_dir, (err, files) => {
     var pages = [];
     for (i in files) {
       let f = files[i];
