@@ -16,6 +16,8 @@ TEST_GEN_PROGS = test_run
 
 TEST_PROGS := test_kmod.sh
 
+TEST_GEN_FILES = xdp
+
 include ~/linux/tools/testing/selftests/lib.mk
 
 BPFOBJ := $(OUTPUT)/libbpf.a
