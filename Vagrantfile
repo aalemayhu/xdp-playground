@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.box = "fedora/25-cloud-base"
   config.vbguest.auto_update = false
+  config.vm.synced_folder ".", "/srv/app", type: "rsync" , owner: "tester"
   config.vm.network "public_network", bridge: [
     "enp0s20u5u4",
     "virbr0",
@@ -19,6 +20,8 @@ Vagrant.configure("2") do |config|
      dnf install -y kernel-devel elfutils-libelf-devel vim bc
      dnf install -y python3-pyroute2 make npm libcap-devel git
      /vagrant/scripts/setup-kernel.sh
+     make -C /srv/app tester
+     make -C /srv/app systemd
   SHELL
   config.vm.provider "virtualbox" do |v|
     v.memory = 4096
