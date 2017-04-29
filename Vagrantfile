@@ -4,7 +4,6 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "xdp-playground"
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.box = "fedora/25-cloud-base"
-  config.vbguest.auto_update = false
   config.vm.synced_folder ".", "/srv/app", type: "rsync" , owner: "tester"
   config.vm.network "public_network", bridge: [
     "enp0s20u5u4",
