@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get install -y npm
+apt-get install -y npm nginx
 make setup
 npm install
 npm cache clean -f
@@ -15,3 +15,8 @@ if [[ "`pwd`" != "/srv/app" ]]; then
  ln -s `pwd` /srv/app
 fi
 make systemd
+
+cp nginx.conf.sigil /etc/nginx/default
+
+systemctl enable nginx
+systemctl start nginx
