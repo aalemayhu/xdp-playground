@@ -6,7 +6,10 @@ npm install
 npm cache clean -f
 npm install -g n 
 n stable
-make tester
+
+if ! id -u tester; then
+  make tester
+fi
 
 if [[ "`pwd`" != "/srv/app" ]]; then
  ln -s `pwd` /srv/app
