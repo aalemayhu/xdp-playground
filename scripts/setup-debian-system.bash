@@ -16,7 +16,7 @@ if [[ "`pwd`" != "/srv/app" ]]; then
 fi
 make systemd
 
-cp nginx.conf.sigil /etc/nginx/default
+cp nginx.conf.sigil /etc/nginx/sites-enabled/default
 
 systemctl enable nginx
 systemctl start nginx
