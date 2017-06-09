@@ -5,9 +5,9 @@ service_file=$(project).service
 serve:
 	npm start
 setup:
-    npm cache clean -f
-    sudo npm install -g n
-    sudo n stable
+	npm cache clean -f
+	sudo npm install -g n
+	sudo n stable
 	npm install
 vps:
 	VBoxManage list runningvms
