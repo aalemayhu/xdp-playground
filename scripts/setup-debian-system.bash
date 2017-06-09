@@ -2,10 +2,6 @@
 
 apt-get install -y npm nginx
 make setup
-npm install
-npm cache clean -f
-npm install -g n 
-n stable
 
 if ! id -u tester; then
   make tester
