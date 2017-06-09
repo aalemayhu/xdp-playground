@@ -1,18 +1,5 @@
 let app = angular.module('xdp-playground', []);
 
-var SetTaskNumber = function(t) {
-  localStorage.setItem("task_number", t);
-}
-
-var GetTaskNumber = function() {
-  var number = localStorage.getItem("task_number");
-  // If the user is here for the "first" time show them the intro.
-  if (!number) {
-    return 'intro';
-  }
-  return number;
-}
-
 let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   function ($scope, $http, $sce) {
 
@@ -23,7 +10,7 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
     url: '/pages'
   }).then(function successCallback(response) {
     $scope.Challenges = response.data;
-    $scope.LoadChallenge(GetTaskNumber());
+    $scope.LoadChallenge(Page.Current());
   }, function errorCallback(response) {
   });
 
@@ -32,7 +19,8 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   };
 
 $scope.LoadChallenge = function(task) {
-  SetTaskNumber(task);
+  Page.Set(task);
+
   $scope.task_number = task;
   $http({
     method: 'GET',
