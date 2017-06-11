@@ -32,4 +32,4 @@ $(BPFOBJ): force
 	$(MAKE) -C $(BPFDIR) OUTPUT=$(OUTPUT)/
 
 run:
-	./test_run
+	sudo ./test_run

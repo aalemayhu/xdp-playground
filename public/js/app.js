@@ -48,6 +48,7 @@ $scope.input_code_changed = function(obj, $event) {
       }
     }
     $http(req).then(function(res){
+      console.log(res.data);
       $scope.compilation_results = res.data.results;
       $scope.rule_id = res.data.id;
     }, function(){

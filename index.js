@@ -47,7 +47,7 @@ var verify_xdp_program = function(id, debug, test) {
             return "Failed to compile test runner";
         }
 
-        return execSync("/usr/bin/make  -C "+test_dir+" run");
+        return execSync("/usr/bin/make  -C "+test_dir+" run")+ " ";
     } catch (e) {
         return e.message;
     }
@@ -66,6 +66,11 @@ app.post('/compile', function (req, res) {
     var data = req.body.input_code;
     var hash = crypto.createHash('md5').update(data).digest("hex");
     var path = local_filename(hash, ".c");
+    var send_results = function (task_number, hash, res, req) {
+        var c = verify_xdp_program(hash, req.body.is_debug, task_number);
+        console.log("compilation: "+c);
+        res.send({ id: hash, results: c });
+    };
 
     /* We want to capture this because of the various UNIX specific errors that
      * could occur like EACCES or other JavaScript issues.
@@ -77,16 +82,13 @@ app.post('/compile', function (req, res) {
                     return;
                 }
 
-                console.log("write: "+path);
-                res.send( { id: hash, results: verify_xdp_program(hash, req.body.is_debug, task_number) });
+                send_results(task_number, hash, res, req);
             });
 
             return;
         }
 
-        console.log("No errors so far so we can compile "+hash+" using cache -> "+path);
-        res.send({ id: hash, results: verify_xdp_program(hash, req.body.is_debug, task_number) });
-
+        send_results(task_number, hash, res, req);
     } catch(e) {
         res.send({ id: hash, results: hash+": "+e.message });
     }
