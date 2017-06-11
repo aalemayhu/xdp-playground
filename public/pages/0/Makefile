@@ -1,4 +1,4 @@
-KDIR ?= ~/linux
+KDIR ?= /lib/modules/$(shell uname -r)/build
 LIBDIR := $(KDIR)/tools/lib
 BPFDIR := $(LIBDIR)/bpf
 APIDIR := $(KDIR)/tools/include/uapi
