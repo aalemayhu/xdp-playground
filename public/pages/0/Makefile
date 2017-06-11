@@ -30,3 +30,6 @@ force:
 
 $(BPFOBJ): force
 	$(MAKE) -C $(BPFDIR) OUTPUT=$(OUTPUT)/
+
+run:
+	./test_run

@@ -9,7 +9,7 @@ var fs = require('fs');
 var app = express();
 
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 app.use(bodyParser.json());
 
 var content_dir = "public/pages";
@@ -39,15 +39,16 @@ var verify_xdp_program = function(id, debug, test) {
             return "Failed to copy content to test directory";
 
         var clang_cmd = "/usr/bin/clang "+ "-O2 -Wall -target bpf -c " +xdp_program+" -o "+obj_file;
+        console.log(clang_cmd);
 
         if (!execSync(clang_cmd))
             return "Failed to compile XDP program; "+clang_cmd;
 
-        if (!execSync("make -C "+test_dir)) {
+        if (!execSync("/usr/bin/make  -C "+test_dir)) {
             return "Failed to compile test runner";
         }
 
-        return execFileSync(test_dir+"/test_run");
+        return execSync("/usr/bin/make  -C "+test_dir+" run");
     } catch (e) {
         return e.message;
     }
