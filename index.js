@@ -27,7 +27,6 @@ var verify_xdp_program = function(id, debug, test) {
     var xdp_program = local_filename(id, ".c");
     var test_dir = local_filename(id, "");
     var obj_file = test_dir+"/xdp.o";
-    var output = "";
 
     try {
         if (!execSync("mkdir -pv "+test_dir))
@@ -39,27 +38,19 @@ var verify_xdp_program = function(id, debug, test) {
         if (!execSync("cp "+content_dir+"/"+test+"/* "+test_dir))
             return "Failed to copy content to test directory";
 
-        var clang_cmd = execFileSync('/usr/bin/clang',
-            ["-O2", "-Wall", "-target", "bpf", "-c", xdp_program, "-o", obj_file], {
-                cwd: process.cwd(),
-                env: process.env,
-                stdio: 'pipe',
-                encoding: 'utf-8'
-            });
+        var clang_cmd = "/usr/bin/clang "+ "-O2 -Wall -target bpf -c " +xdp_program+" -o "+obj_file;
 
-        output += "<clang> "+clang_cmd.output;
+        if (!execSync(clang_cmd))
+            return "Failed to compile XDP program; "+clang_cmd;
 
         if (!execSync("make -C "+test_dir)) {
             return "Failed to compile test runner";
         }
 
-        output += execFileSync(test_dir+"/test_run");
-
+        return execFileSync(test_dir+"/test_run");
     } catch (e) {
-        output += "err="+e.message+"\n";
+        return e.message;
     }
-
-    return output;
 };
 
 var generic_err_msg = function(hash) {
