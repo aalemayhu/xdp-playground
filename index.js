@@ -18,52 +18,48 @@ var a_log = function(output) {
   console.log(new Date()+" "+output);
 };
 
-var a_cmd = function(cmd) {
-  a_log("CMD "+cmd);
-  execSync(cmd);
-};
-
 var local_filename = function(name, suffix) {
   var dir = app.get('STORAGE_DIR') || "/";
   return dir+"tmp/"+name+suffix;
 }
 
 var verify_xdp_program = function(id, debug, test) {
-  var xdp_program = local_filename(id, ".c");
-  var test_dir = local_filename(id, "");
-  var obj_file = test_dir+"/xdp.o";
-  var output = "";
+    var xdp_program = local_filename(id, ".c");
+    var test_dir = local_filename(id, "");
+    var obj_file = test_dir+"/xdp.o";
+    var output = "";
 
-  a_cmd("mkdir -pv "+test_dir);
-  try {
-    if (!fs.existsSync(test_dir)) {
-      throw "Test directory does not exist";
-    }
-    // TODO: check the copy command.
-    a_cmd("cp "+content_dir+"/"+test+"/* "+test_dir);
     try {
-      var clang_cmd = execFileSync('/usr/bin/clang',
-        ["-O2", "-Wall", "-target", "bpf", "-c", xdp_program, "-o", obj_file], {
-          cwd: process.cwd(),
-          env: process.env,
-          stdio: 'pipe',
-          encoding: 'utf-8'
-        });
-      if (clang_cmd)
-        output += clang_cmd.output;
-      // TODO: use the test framework recently submitted upstream to run the test.
-      // Comment above can be deleted when the below works.
-      a_cmd("make -C "+test_dir);
-      output += execFileSync(test_dir+"/test_run");
-    } catch (e) {
-      return e.message;
-    }
-  } catch (e) {
-    a_log(e);
-    return generic_err_msg(id)
-  }
+        if (!execSync("mkdir -pv "+test_dir))
+            return "Failed to create test directory at "+test_dir;
 
-  return output;
+        if (!fs.existsSync(test_dir))
+            return test_dir+" directory does not exist";
+
+        if (!execSync("cp "+content_dir+"/"+test+"/* "+test_dir))
+            return "Failed to copy content to test directory";
+
+        var clang_cmd = execFileSync('/usr/bin/clang',
+            ["-O2", "-Wall", "-target", "bpf", "-c", xdp_program, "-o", obj_file], {
+                cwd: process.cwd(),
+                env: process.env,
+                stdio: 'pipe',
+                encoding: 'utf-8'
+            });
+
+        output += "<clang> "+clang_cmd.output;
+
+        if (!execSync("make -C "+test_dir)) {
+            return "Failed to compile test runner";
+        }
+
+        output += execFileSync(test_dir+"/test_run");
+
+    } catch (e) {
+        output += "err="+e.message+"\n";
+    }
+
+    return output;
 };
 
 var generic_err_msg = function(hash) {
