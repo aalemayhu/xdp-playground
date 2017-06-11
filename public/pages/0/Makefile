@@ -9,14 +9,13 @@ ifneq ($(wildcard $(GENHDR)),)
   GENFLAGS := -DHAVE_GENHDR
 endif
 
-CFLAGS += -Wall -O2 -I$(APIDIR) -I$(LIBDIR) -I$(GENDIR) $(GENFLAGS) -I$(KDIR)/tools/include
+CFLAGS += -Wall -O2 -I$(APIDIR) -I$(LIBDIR) -I$(GENDIR) $(GENFLAGS) -I$(KDIR)/tools/include \
+			-I$(KDIR)/tools/testing/selftests/bpf
 LDLIBS += -lcap -lelf
 
 TEST_GEN_PROGS = test_run
 
 TEST_PROGS := test_kmod.sh
-
-TEST_GEN_FILES = xdp
 
 include $(KDIR)/tools/testing/selftests/lib.mk
 
@@ -31,10 +30,3 @@ force:
 
 $(BPFOBJ): force
 	$(MAKE) -C $(BPFDIR) OUTPUT=$(OUTPUT)/
-
-CLANG ?= clang
-
-%.o: %.c
-	$(CLANG) -I$(KDIR)/tools/include/uapi -I$(KDIR)/samples/bpf \
-		-D__x86_64__ -Wno-compare-distinct-pointer-types \
-		-O2 -target bpf -c $< -o $@
