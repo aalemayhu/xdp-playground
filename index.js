@@ -53,11 +53,6 @@ var verify_xdp_program = function(id, debug, test) {
     }
 };
 
-var generic_err_msg = function(hash) {
-  return "There was a error saving your program for compilation, "+
-    "please report this on Github with the program and id "+hash;
-};
-
 /**
  * /compile - Take the user input and create a hash from it. Use the hash to
  * store a temporarily C file that can be used by clang for compilation. If
@@ -67,42 +62,34 @@ var generic_err_msg = function(hash) {
  */
 // TODO: add a user specific has to avoid collision based on two users writing the same program.
 app.post('/compile', function (req, res) {
-  var task_number = req.body.task_number;
-  var data = req.body.input_code;
-  var hash = crypto.createHash('md5').update(data).digest("hex");
-  var path = local_filename(hash, ".c");
+    var task_number = req.body.task_number;
+    var data = req.body.input_code;
+    var hash = crypto.createHash('md5').update(data).digest("hex");
+    var path = local_filename(hash, ".c");
 
-  /* We want to capture this because of the various UNIX specific errors that
-   * could occur like EACCES or other JavaScript issues.
-   */
-  try {
-    if (!fs.existsSync(path)) {
-      fs.writeFile(path, data, function(err) {
-        if (err) {
-          a_log("writeFile "+err);
-	  res.send({id: hash, results: generic_err_msg(hash)});
-        } else {
-          a_log("writeFile "+path);
-	  res.send( {
-	    id: hash, 
-	    results: verify_xdp_program(hash, req.body.is_debug, task_number)
-	  });
+    /* We want to capture this because of the various UNIX specific errors that
+     * could occur like EACCES or other JavaScript issues.
+     */
+    try {
+        if (!fs.existsSync(path)) {
+            fs.writeFile(path, data, function(err) {
+                if (err) { res.send({id: hash, results: hash+": "+err.message});
+                    return;
+                }
+
+                console.log("write: "+path);
+                res.send( { id: hash, results: verify_xdp_program(hash, req.body.is_debug, task_number) });
+            });
+
+            return;
         }
-      });
-    } else {
-      a_log("No errors so far so we can compile "+hash+" using cache -> "+path);
-      res.send({
-	id: hash, 
-	results: verify_xdp_program(hash, req.body.is_debug, task_number)
-      });
+
+        console.log("No errors so far so we can compile "+hash+" using cache -> "+path);
+        res.send({ id: hash, results: verify_xdp_program(hash, req.body.is_debug, task_number) });
+
+    } catch(e) {
+        res.send({ id: hash, results: hash+": "+e.message });
     }
-  } catch(e) {
-    a_log(e);
-    res.send({
-      id: hash,
-      results: generic_err_msg(hash)
-    });
-  }
 });
 
 app.get('/app_version', function(req, res){
