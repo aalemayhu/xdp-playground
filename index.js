@@ -31,7 +31,7 @@ var local_filename = function(name, suffix) {
 var verify_xdp_program = function(id, debug, test) {
   var xdp_program = local_filename(id, ".c");
   var test_dir = local_filename(id, "");
-  var obj_file = test_dir+"/"+test+".o";
+  var obj_file = test_dir+"/xdp.o";
   var output = "";
 
   a_cmd("mkdir -pv "+test_dir);
