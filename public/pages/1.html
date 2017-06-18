@@ -1,0 +1,40 @@
+<p>Take the program below and make it:</p>
+<ul>
+	<li>1. Drop all IPV4 traffic </li>
+	<li>2. For all  IPV6 modify field x and pass it on.</li>
+</ul>
+<div class="alert alert-warning" role="alert">
+	hint: Remember to perform your boundary checks.
+</div>
+<hr>
+
+<pre>
+#include &ltlinux/bpf.h&gt
+#include &ltlinux/if_ether.h&gt
+
+#include "bpf_endian.h"
+
+#ifndef __section
+# define __section(NAME)                                                \
+        __attribute__((section(NAME), used))
+#endif
+
+__section("xdp")
+int xdp_drop(struct xdp_md *ctx)
+{
+	void *data_end = (void *)(long)ctx->data_end;
+	void *data = (void *)(long)ctx->data;
+	struct ethhdr *eth = data;
+	__u16 h_proto;
+
+	h_proto = eth->h_proto;
+
+	if (h_proto != bpf_htons(ETH_P_IP))
+		return XDP_DROP;
+
+	return XDP_PASS;
+}
+
+char __license[] __section("license") = "GPL";
+int __version __section("version") = 1;
+</pre>

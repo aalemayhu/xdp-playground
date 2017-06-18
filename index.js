@@ -11,6 +11,8 @@ var app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+var kernel_version = execSync("uname -r | tr -d '\n'");
+
 var content_dir = "public/pages";
 
 var a_log = function(output) {
@@ -38,6 +40,9 @@ var verify_xdp_program = function(id, debug, test) {
             return "Failed to copy content to test directory";
 
         var clang_cmd = "/usr/bin/clang -O2 -Wall -target bpf -c "+xdp_program+" -o "+obj_file;
+        clang_cmd += " -I/lib/modules/"+kernel_version+"/build/tools/testing/selftests/bpf ";
+        clang_cmd += " -Wcompare-distinct-pointer-types";
+        // clang_cmd += " -I/srv/app/public/include";
         console.log(clang_cmd);
 
         if (!execSync(clang_cmd))
@@ -109,9 +114,8 @@ app.get('/about', function(req, res){
 });
 
 app.get('/version', function(req, res){
-  var kernel = execSync('uname -r');
   var clang = execSync("clang --version");
-  res.send(kernel+" and "+clang);
+  res.send(kernel_version+" and "+clang);
 });
 
 app.get('/pages', function(req, res){
