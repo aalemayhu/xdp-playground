@@ -41,7 +41,7 @@
           <div ng-if="verdict.length > 0"
                ng-class="verdict == 'fail' ? 'alert alert-danger' : 'alert alert-success'" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            {{ verdict_desc  }}
+            <pre>{{ verdict_desc  }}</pre>
           </div>
         </div>
       <div>
