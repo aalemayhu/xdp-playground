@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "xdp-playground"
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.box = "fedora/25-cloud-base"
-  config.vm.synced_folder ".", "/srv/app", type: "rsync"
+  config.vm.synced_folder ".", "/srv/app", type: "rsync", rsync__exclude: "package.box"
   config.vm.provision "shell", inline: <<-SHELL
      dnf update -y
      dnf install -y bcc bcc-tools bcc-doc --enablerepo=updates-testing
