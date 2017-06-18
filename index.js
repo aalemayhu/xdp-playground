@@ -48,10 +48,10 @@ var verify_xdp_program = function(id, debug, test) {
         if (!execSync(clang_cmd))
             return "Failed to compile XDP program; "+clang_cmd;
 
-        if (!execSync("/usr/bin/make", {cwd: test_dir}))
+        if (!execSync("/usr/bin/make -s", {cwd: test_dir}))
             return "Failed to compile test runner";
 
-        return execSync("/usr/bin/make run", {cwd: test_dir})+ " ";
+        return execSync("/usr/bin/make -s run", {cwd: test_dir})+ " ";
     } catch (e) {
         return e.message;
     }
