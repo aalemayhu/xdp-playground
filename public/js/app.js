@@ -6,9 +6,7 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   $scope.title = "XDP Playground";
   $scope.input_code = User.Input();
 
-  $http({
-    method: 'GET',
-    url: '/pages'
+  $http({ method: 'GET', url: '/pages'
   }).then(function successCallback(response) {
     $scope.Challenges = response.data;
     $scope.LoadChallenge(Page.Current());
