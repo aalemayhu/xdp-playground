@@ -18,6 +18,7 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   };
 
 $scope.LoadChallenge = function(challenge) {
+  $scope.compilation_results = "";
   $scope.verdict = ""; // clear state.
   Page.Set(challenge);
 
