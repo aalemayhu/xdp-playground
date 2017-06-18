@@ -4,6 +4,7 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   function ($scope, $http, $sce) {
 
   $scope.title = "XDP Playground";
+  $scope.input_code = User.Input();
 
   $http({
     method: 'GET',
@@ -34,7 +35,10 @@ $scope.LoadChallenge = function(task) {
 };
 
 $scope.input_code_changed = function(obj, $event) {
+    console.log("input_code_changed\n");
     let input_code = obj.input_code;
+
+    User.SaveInput(input_code);
 
     var req = {
       method: 'POST',
