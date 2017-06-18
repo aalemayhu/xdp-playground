@@ -66,12 +66,12 @@ var verify_xdp_program = function(id, debug, test) {
  */
 // TODO: add a user specific has to avoid collision based on two users writing the same program.
 app.post('/compile', function (req, res) {
-    var task_number = req.body.task_number;
+    var challenge = req.body.challenge;
     var data = req.body.input_code;
     var hash = crypto.createHash('md5').update(data).digest("hex");
     var path = local_filename(hash, ".c");
-    var send_results = function (task_number, hash, res, req) {
-        var c = verify_xdp_program(hash, req.body.is_debug, task_number);
+    var send_results = function (challenge, hash, res, req) {
+        var c = verify_xdp_program(hash, req.body.is_debug, challenge);
         console.log("compilation: "+c);
         res.send({ id: hash, results: c });
     };
@@ -86,13 +86,13 @@ app.post('/compile', function (req, res) {
                     return;
                 }
 
-                send_results(task_number, hash, res, req);
+                send_results(challenge, hash, res, req);
             });
 
             return;
         }
 
-        send_results(task_number, hash, res, req);
+        send_results(challenge, hash, res, req);
     } catch(e) {
         res.send({ id: hash, results: hash+": "+e.message });
     }

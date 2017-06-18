@@ -19,13 +19,13 @@
       <h1>{{ title }}<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
       <hr>
       <div class="container">
-        <div ng-if="isNumber(task_number)">
-          This is task <span class="badge badge-default">{{ task_number }}</span> of the {{ title }}
+        <div ng-if="isNumber(challenge)">
+          This is challenge <span class="badge badge-default">{{ challenge }}</span> of the {{ title }}
         </div>
-        <p ng-bind-html="task_description"></p>
+        <p ng-bind-html="challenge_description"></p>
       </div>
         <div class="mt-2 col-md-12">
-	<textarea class="form-control prettyprint" ng-if="isNumber(task_number)"
+	<textarea class="form-control prettyprint" ng-if="isNumber(challenge)"
             autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"
 	ng-change="input_code_changed(this)"
  rows="15" cols="80%" type="text" ng-model="input_code"
@@ -51,7 +51,7 @@
 	  Load page
 	</button>
 	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <button ng-class="c == task_number ? 'dropdown-item disabled' : 'dropdown-item'" ng-repeat="c in Challenges"
+          <button ng-class="c == challenge ? 'dropdown-item disabled' : 'dropdown-item'" ng-repeat="c in Challenges"
                                                                                            ng-click="LoadChallenge(c)">{{ isNumber(c) ? 'Challenge ' : ''}}{{ c }}</button>
 	</div>
       </div>

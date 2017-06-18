@@ -19,16 +19,16 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
     return !isNaN(n)
   };
 
-$scope.LoadChallenge = function(task) {
+$scope.LoadChallenge = function(challenge) {
   $scope.verdict = ""; // clear state.
-  Page.Set(task);
+  Page.Set(challenge);
 
-  $scope.task_number = task;
+  $scope.challenge = challenge;
   $http({
     method: 'GET',
-    url: "pages/"+$scope.task_number+".html"
+    url: "pages/"+$scope.challenge+".html"
   }).then(function successCallback(response) {
-    $scope.task_description = $sce.trustAsHtml(response.data);
+    $scope.challenge_description = $sce.trustAsHtml(response.data);
   }, function errorCallback(response) {
     // TODO: handle this.
   });
@@ -49,7 +49,7 @@ $scope.input_code_changed = function(obj, $event) {
       data: {
         input_code: input_code,
         is_debug: false,
-        task_number: $scope.task_number
+        challenge: $scope.challenge
       }
     };
     $http(req).then(function(res){

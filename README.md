@@ -1,8 +1,8 @@
 # XDP playground
 
 This is a open list challenge to help you learn to write real XDP programs.  The
-playground consists of pages which can either be interactive tasks or reading
-material. In the interactive tasks you are expected to write XDP programs which
+playground consists of pages which can either be interactive challenges or reading
+material. In the interactive ones you are expected to write XDP programs which
 get verified by the playground.
 
 A running instance of the playground is available at http://playground.xdp.no/
