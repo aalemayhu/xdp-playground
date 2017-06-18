@@ -48,11 +48,11 @@
         <div class="mt-2 col-md-12">
       <div class="dropup">
 	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  Load page
+	  Load challenge
 	</button>
 	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <button ng-class="c == challenge ? 'dropdown-item disabled' : 'dropdown-item'" ng-repeat="c in Challenges"
-                                                                                           ng-click="LoadChallenge(c)">{{ isNumber(c) ? 'Challenge ' : ''}}{{ c }}</button>
+                                                                                           ng-click="LoadChallenge(c)">{{ c }}</button>
 	</div>
       </div>
         </div>

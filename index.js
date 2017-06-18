@@ -121,14 +121,19 @@ app.get('/version', function(req, res){
 app.get('/pages', function(req, res){
   fs.readdir(content_dir, (err, files) => {
     var pages = [];
+
     for (i in files) {
-      let f = files[i];
-      if (f.endsWith("html")) {
+      var f = files[i];
+
+      if (f.startsWith("intro"))
+          continue;
+
+      if (f.endsWith("html"))
         pages.push(f.replace(/\.[^/.]+$/, ""));
-      }
     }
+
     res.send(pages);
-  })
+  });
 });
 
 app.get('*', function(req, res) {
