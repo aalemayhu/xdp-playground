@@ -13,9 +13,9 @@ present the challenge. To create a new challenge you need to
   This program must be placed in the directory `public/pages/7/`. The directory
   name has to match the HTML file so it gets loaded properly. You also have to
   include a Makefile which produces the test program `test_run`.  You can use
-  the template at `public/pages/0/Makefile`. There are no limitations
-  on the program name or object file as long as the `test_run` is the one handling
-  it. However there are some restrictions on output, if the user writes a program
+  the template at `public/pages/0/Makefile`. The program you load has to be
+  `xdp.o` in `test_run` is the one handling it.
+  There are also some restrictions on output, if the user writes a program
   which passes your checks you need to print out `verdict=pass;` or `verdict=fail;`
   for invalid input. You should also print out useful debug output before the verdict.
   These messages can be useful for users when they need to debug.
@@ -25,7 +25,6 @@ If you have done the above correctly you should end up with something like
     public/pages/
     ├── 7
     │   ├── Makefile
-    │   ├── xdp.c
     │   └── test_run.c
     └── 7.html
 
