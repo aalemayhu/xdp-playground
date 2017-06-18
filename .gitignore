@@ -62,3 +62,6 @@ typings/
 
 .vagrant
 packer_build
+
+.idea
+package-lock.json
