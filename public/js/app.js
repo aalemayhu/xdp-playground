@@ -46,11 +46,20 @@ $scope.input_code_changed = function(obj, $event) {
         is_debug: false,
         task_number: $scope.task_number
       }
-    }
+    };
     $http(req).then(function(res){
       console.log(res.data);
       $scope.compilation_results = res.data.results;
       $scope.rule_id = res.data.id;
+
+      if ($scope.compilation_results.indexOf("verdict=fail;") !== -1) {
+        $scope.verdict = "fail";
+      } else if ($scope.compilation_results.indexOf("verdict=pass;") !== -1) {
+          $scope.verdict = "pass";
+      } else {
+        $scope.verdict = "";
+      }
+
     }, function(){
       // TODO: handle this properly
     });
