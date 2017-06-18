@@ -4,7 +4,7 @@ HTML is used for the tasks so that the challenge writer has flexibility to
 present the challenge. To create a new challenge you need to
 
 - Create a new HTML file in `public/pages`, for example `public/pages/7.html`
-  or some other available number.  You can use the [public/pages/TEMPLATE.html][t]
+  or some other available number.  You can use [public/pages/0.html][t]
   as base. This file will describe your challenge to the user. You might want
   to include some background information or other descriptions before
   presenting the task.
@@ -13,7 +13,7 @@ present the challenge. To create a new challenge you need to
   This program must be placed in the directory `public/pages/7/`. The directory
   name has to match the HTML file so it gets loaded properly. You also have to
   include a Makefile which produces the test program `test_run`.  You can use
-  the template at `public/pages/TEMPLATE.Makefile`. There are no limitiations
+  the template at `public/pages/0/Makefile`. There are no limitations
   on the program name or object file as long as the `test_run` is the one handling
   it. However there are some restrictions on output, if the user writes a program
   which passes your checks you need to print out `verdict=pass;` or `verdict=fail;`
