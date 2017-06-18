@@ -19,6 +19,7 @@ let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   };
 
 $scope.LoadChallenge = function(task) {
+  $scope.verdict = ""; // clear state.
   Page.Set(task);
 
   $scope.task_number = task;
@@ -48,14 +49,16 @@ $scope.input_code_changed = function(obj, $event) {
       }
     };
     $http(req).then(function(res){
-      console.log(res.data);
+      // console.log(res.data);
       $scope.compilation_results = res.data.results;
       $scope.rule_id = res.data.id;
 
       if ($scope.compilation_results.indexOf("verdict=fail;") !== -1) {
-        $scope.verdict = "fail";
+          $scope.verdict = "fail";
+          $scope.verdict_desc = $scope.compilation_results;
       } else if ($scope.compilation_results.indexOf("verdict=pass;") !== -1) {
           $scope.verdict = "pass";
+          $scope.verdict_desc = "Congratulations on passing this challenge!";
       } else {
         $scope.verdict = "";
       }

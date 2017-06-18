@@ -16,9 +16,9 @@ present the challenge. To create a new challenge you need to
   the template at `public/pages/TEMPLATE.Makefile`. There are no limitiations
   on the program name or object file as long as the `test_run` is the one handling
   it. However there are some restrictions on output, if the user writes a program
-  which passes your checks you need to print out `verdict=pass;` or `verdict=fail`
+  which passes your checks you need to print out `verdict=pass;` or `verdict=fail;`
   for invalid input. You should also print out useful debug output before the verdict.
-  Messages to the user need to be in brackets, for example `[The message to the user]`.
+  These messages can be useful for users when they need to debug.
 
 If you have done the above correctly you should end up with something like
 

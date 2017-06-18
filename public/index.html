@@ -36,10 +36,11 @@
         <textarea class="form-control" readonly ng-if="compilation_results.length > 0 && verdict.length == 0"
            rows="15" cols="80%" type="text" ng-model="compilation_results">
 	</textarea>
-          <!--Show error alert when the verdict is failure-->
-          <div ng-if="verdict=='fail'" class="alert alert-danger" role="alert">
+          <!--Show alert when the verdict is made-->
+          <div ng-if="verdict.length > 0"
+               ng-class="verdict == 'fail' ? 'alert alert-danger' : 'alert alert-success'" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            {{ compilation_results  }}
+            {{ verdict_desc  }}
           </div>
         </div>
       <div>

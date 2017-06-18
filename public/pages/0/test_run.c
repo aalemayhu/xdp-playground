@@ -88,7 +88,6 @@ int main(void)
 				buf, &size, &retval, &duration);
 
 	if (retval != XDP_DROP) {
-		printf("bpf_prog_test_run(...): ");
 		switch (retval) {
 		case XDP_PASS:
 			printf("XDP_PASS");
