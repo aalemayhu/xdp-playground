@@ -52,6 +52,7 @@ $scope.input_code_changed = function(obj, $event) {
       $scope.compilation_results = res.data.results;
       $scope.rule_id = res.data.id;
     }, function(){
+      // TODO: handle this properly
     });
   };
 
@@ -71,5 +72,6 @@ $scope.input_code_changed = function(obj, $event) {
   }).then(function successCallback(response) {
     $scope.app_version = response.data;
   }, function errorCallback(response) {
+      // TODO: handle this properly
   });
 }]);
