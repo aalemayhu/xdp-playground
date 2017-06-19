@@ -3,7 +3,7 @@ port ?= 8080
 service_file=$(project).service
 
 serve:
-	npm start
+	nodemon index.js
 setup:
 	npm cache clean -f
 	sudo npm install -g n
