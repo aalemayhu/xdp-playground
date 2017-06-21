@@ -1,64 +1,70 @@
 <!doctype html>
 <html ng-app="xdp-playground">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>{{ title }}</title>
-    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js">
-    </script>
-    <script src="js/page.js"></script>
-    <script src="js/user.js"></script>
-    <script src="js/app.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  </head>
-  <body ng-controller="MainController">
-    <div class="container">
-      <h1>{{ title }}<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
-      <hr>
-      <div class="container">
-        <div ng-if="isNumber(challenge)">
-          This is challenge <span class="badge badge-default">{{ challenge }}</span> of the {{ title }}
-        </div>
-        <p ng-bind-html="challenge_description"></p>
-      </div>
-        <div class="mt-2 col-md-12">
-	<textarea class="form-control prettyprint" ng-if="isNumber(challenge)"
-            autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"
-	ng-change="input_code_changed(this)"
- rows="15" cols="80%" type="text" ng-model="input_code"
-				    placeholder="Insert / write your XDP program here (compiles on the fly)">
-	</textarea>
-        </div>
-        <div class="mt-2 col-md-12">
-          <!--Only show the compilation results when we are waiting for a verdict-->
-        <textarea class="form-control" readonly ng-if="compilation_results.length > 0 && verdict.length == 0"
-           rows="15" cols="80%" type="text" ng-model="compilation_results">
-	</textarea>
-          <!--Show alert when the verdict is made-->
-          <div ng-if="verdict.length > 0"
-               ng-class="verdict == 'fail' ? 'alert alert-danger' : 'alert alert-success'" role="alert">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <pre>{{ verdict_desc  }}</pre>
-          </div>
-        </div>
-      <div>
-        <div class="mt-2 col-md-12">
-      <div class="dropup">
-	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  Load challenge
-	</button>
-	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <button ng-class="c == challenge ? 'dropdown-item disabled' : 'dropdown-item'" ng-repeat="c in Challenges"
-                                                                                           ng-click="LoadChallenge(c)">{{ c }}</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>{{ title }}</title>
+  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js">
+  </script>
+
+  <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
+  <script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+
+  <script src="js/page.js"></script>
+  <script src="js/user.js"></script>
+  <script src="js/app.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+</head>
+<body ng-controller="MainController">
+<div class="container">
+  <h1>{{ title }}<small ng-if="app_version != 'xyz'"> - v{{ app_version }}</small></h1>
+  <hr>
+  <div ng-if="isNumber(challenge)">
+    This is challenge <span class="badge badge-default">{{ challenge }}</span> of the {{ title }}
+  </div>
+  <p ng-bind-html="challenge_description"></p>
+  <hr>
+  <div class="mt-2 col-md-12">
+	<div
+            ui-codemirror="{ lineNumbers: true, lineWrapping: true, mode: 'go', theme : 'ttcn'}"
+              ng-if="isNumber(challenge)"
+              ng-change="input_code_changed(this)"
+              ng-model="input_code"
+              placeholder="// Insert / write your XDP program here (compiles on the fly)">
 	</div>
-      </div>
-        </div>
-        <hr>
-      </div>
-      <code ng-if="versions != 'xyz'">{{ versions }}</code>
+  </div>
+  <div class="mt-2 col-md-12">
+    <!--Only show the compilation results when we are waiting for a verdict-->
+    <textarea class="form-control" readonly ng-if="compilation_results.length > 0 && verdict.length == 0"
+              rows="15" cols="80%" type="text" ng-model="compilation_results">
+	</textarea>
+    <!--Show alert when the verdict is made-->
+    <div ng-if="verdict.length > 0"
+         ng-class="verdict == 'fail' ? 'alert alert-danger' : 'alert alert-success'" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <pre>{{ verdict_desc  }}</pre>
     </div>
-  </body>
+  </div>
+  <div>
+    <div class="mt-2 col-md-12">
+      <div class="dropup">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Load challenge
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <button ng-class="c == challenge ? 'dropdown-item disabled' : 'dropdown-item'" ng-repeat="c in Challenges"
+                  ng-click="LoadChallenge(c)">{{ c }}</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <code ng-if="versions != 'xyz'">{{ versions }}</code>
+</div>
+</body>
 </html>

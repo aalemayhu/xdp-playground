@@ -1,4 +1,4 @@
-let app = angular.module('xdp-playground', []);
+let app = angular.module('xdp-playground', ['ui.codemirror']);
 
 let controller = app.controller('MainController', ['$scope', '$http', '$sce',
   function ($scope, $http, $sce) {
