@@ -9,6 +9,9 @@ setup:
 	sudo npm install -g n
 	sudo n stable
 	npm install
+	sudo npm install -g bower
+	cd public && bower install angular-ui-codemirror
+
 vps:
 	VBoxManage list runningvms
 vbox:
